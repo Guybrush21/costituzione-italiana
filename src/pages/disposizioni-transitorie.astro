@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../components/Layout.astro';
+import { costituzioneStructure } from '../data/structure';
+
+const disposizioni = await getCollection('articoli', ({ data }) => 
+  data.tipo === 'disposizione'
+);
+
+// Roman numeral order
+const romanOrder = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII'];
+disposizioni.sort((a, b) => romanOrder.indexOf(a.data.numero as string) - romanOrder.indexOf(b.data.numero as string));
+---
+
+<Layout 
+  title="Disposizioni Transitorie e Finali" 
+  description="Le disposizioni transitorie e finali della Costituzione Italiana."
+>
+  <main class="section-page">
+    <div class="container">
+      <header class="section-header">
+        <nav class="breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Disposizioni Transitorie e Finali</span>
+        </nav>
+        <h1>Disposizioni Transitorie e Finali</h1>
+        <p class="section-description">
+          Le diciotto disposizioni transitorie e finali che accompagnano la 
+          Costituzione Italiana, regolando il passaggio dal vecchio al nuovo ordinamento.
+        </p>
+      </header>
+
+      <div class="articles-list">
+        {disposizioni.map((disp) => (
+          <a href={`/disposizione/${(disp.data.numero as string).toLowerCase()}`} class="article-card">
+            <span class="article-card-number">{disp.data.numero}</span>
+            <p class="article-card-excerpt">{disp.data.descrizione}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .section-page {
+    padding: var(--space-8) 0;
+  }
+
+  .section-header {
+    max-width: var(--max-width-content);
+    margin: 0 auto var(--space-10);
+    text-align: center;
+  }
+
+  .section-header h1 {
+    margin-top: var(--space-4);
+    color: var(--color-primary);
+  }
+
+  .section-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .articles-list {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+  }
+
+  .article-card {
+    display: block;
+    padding: var(--space-5);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+
+  .article-card:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+    text-decoration: none;
+  }
+
+  .article-card-number {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+
+  .article-card-excerpt {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-family: var(--font-serif);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+</style>

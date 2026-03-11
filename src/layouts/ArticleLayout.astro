@@ -1,0 +1,141 @@
+---
+import { getAdjacentArticles, getArticlePath, getArticleContext, costituzioneStructure } from '../data/structure';
+
+interface Props {
+  numero: number | string;
+  tipo: 'articolo' | 'disposizione';
+  titolo: string;
+  abrogato: boolean;
+  parte?: string | null;
+  titoloSezione?: string | null;
+  sezione?: string | null;
+}
+
+const { numero, tipo, titolo, abrogato, parte, titoloSezione, sezione } = Astro.props;
+
+// Get adjacent articles for navigation
+const adjacent = getAdjacentArticles(numero);
+
+// Build breadcrumb
+const breadcrumbs: { label: string; href?: string }[] = [
+  { label: 'Home', href: '/' },
+];
+
+if (tipo === 'disposizione') {
+  breadcrumbs.push({ label: 'Disposizioni Transitorie e Finali', href: '/disposizioni-transitorie' });
+} else if (sezione === 'principi-fondamentali') {
+  breadcrumbs.push({ label: 'Principî Fondamentali', href: '/principi-fondamentali' });
+} else if (parte) {
+  const parteInfo = costituzioneStructure.parti.find(p => p.numero === parte);
+  if (parteInfo) {
+    breadcrumbs.push({ label: `Parte ${parte}`, href: `/parte/${parte === 'I' ? '1' : '2'}` });
+    
+    if (titoloSezione) {
+      const titoloInfo = parteInfo.titoli.find(t => t.numero === titoloSezione);
+      if (titoloInfo) {
+        breadcrumbs.push({ label: `Titolo ${titoloSezione} - ${titoloInfo.nome}` });
+      }
+    }
+  }
+}
+
+breadcrumbs.push({ label: titolo });
+---
+
+<main class="article-page">
+  <div class="container">
+    <div class="article-wrapper">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Percorso">
+        {breadcrumbs.map((crumb, index) => (
+          <>
+            {index > 0 && <span class="breadcrumb-separator" aria-hidden="true">/</span>}
+            {crumb.href ? (
+              <a href={crumb.href}>{crumb.label}</a>
+            ) : (
+              <span aria-current="page">{crumb.label}</span>
+            )}
+          </>
+        ))}
+      </nav>
+      
+      <!-- Article Header -->
+      <header class="article-header">
+        <span class="article-number">{tipo === 'articolo' ? `Art. ${numero}` : numero}</span>
+        <h1>{titolo}</h1>
+        {abrogato && (
+          <p class="article-status article-abrogato">Articolo abrogato</p>
+        )}
+      </header>
+      
+      <!-- Article Content -->
+      <article class:list={['article-content', { 'article-abrogato-content': abrogato }]}>
+        <slot />
+      </article>
+      
+      <!-- Article Navigation -->
+      <nav class="article-nav" aria-label="Navigazione articoli">
+        {adjacent.prev ? (
+          <a 
+            href={getArticlePath(adjacent.prev.numero, adjacent.prev.tipo)} 
+            class="article-nav-link prev"
+          >
+            <span class="article-nav-label">Precedente</span>
+            <span class="article-nav-title">
+              {adjacent.prev.tipo === 'articolo' ? `Art. ${adjacent.prev.numero}` : `Disp. ${adjacent.prev.numero}`}
+            </span>
+          </a>
+        ) : (
+          <div></div>
+        )}
+        
+        {adjacent.next ? (
+          <a 
+            href={getArticlePath(adjacent.next.numero, adjacent.next.tipo)} 
+            class="article-nav-link next"
+          >
+            <span class="article-nav-label">Successivo</span>
+            <span class="article-nav-title">
+              {adjacent.next.tipo === 'articolo' ? `Art. ${adjacent.next.numero}` : `Disp. ${adjacent.next.numero}`}
+            </span>
+          </a>
+        ) : (
+          <div></div>
+        )}
+      </nav>
+    </div>
+  </div>
+</main>
+
+<style>
+  .article-page {
+    padding: var(--space-8) 0;
+  }
+  
+  .article-wrapper {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+  }
+  
+  .article-header {
+    margin-bottom: var(--space-8);
+  }
+  
+  .article-header h1 {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+  
+  .article-status {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  
+  .article-abrogato-content {
+    opacity: 0.6;
+    font-style: italic;
+  }
+</style>

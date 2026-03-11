@@ -1,0 +1,315 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../components/Layout.astro';
+import { costituzioneStructure } from '../data/structure';
+
+// Get all articles and dispositions
+const allArticoli = await getCollection('articoli');
+
+// Separate and sort
+const articoli = allArticoli
+  .filter(a => a.data.tipo === 'articolo')
+  .sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
+
+const romanOrder = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII'];
+const disposizioni = allArticoli
+  .filter(a => a.data.tipo === 'disposizione')
+  .sort((a, b) => romanOrder.indexOf(a.data.numero as string) - romanOrder.indexOf(b.data.numero as string));
+
+// Group articles by section
+const principi = articoli.filter(a => a.data.sezione === 'principi-fondamentali');
+const parte1 = articoli.filter(a => a.data.parte === 'I');
+const parte2 = articoli.filter(a => a.data.parte === 'II');
+
+// Pre-render all content
+const renderedArticoli = await Promise.all(
+  articoli.map(async (a) => ({
+    ...a,
+    rendered: await render(a),
+  }))
+);
+
+const renderedDisposizioni = await Promise.all(
+  disposizioni.map(async (d) => ({
+    ...d,
+    rendered: await render(d),
+  }))
+);
+---
+
+<Layout 
+  title="Testo Completo" 
+  description="Il testo completo della Costituzione della Repubblica Italiana"
+>
+  <main class="full-text-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Costituzione della Repubblica Italiana</h1>
+        <p class="page-subtitle">Testo completo</p>
+        <button class="btn btn-primary print-btn" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6,9 6,2 18,2 18,9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Stampa
+        </button>
+      </header>
+
+      <!-- Preamble -->
+      <section class="preamble">
+        <p><strong>IL CAPO PROVVISORIO DELLO STATO</strong></p>
+        <p>
+          Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
+          del 22 dicembre 1947 ha approvato la Costituzione della Repubblica Italiana;
+        </p>
+        <p>Vista la XVIII disposizione finale della Costituzione;</p>
+        <p><strong>PROMULGA</strong></p>
+        <p>la Costituzione della Repubblica Italiana nel seguente testo:</p>
+      </section>
+
+      <!-- Principî Fondamentali -->
+      <section class="constitution-section">
+        <h2 id="principi-fondamentali">Principî Fondamentali</h2>
+        {renderedArticoli.filter(a => a.data.sezione === 'principi-fondamentali').map(({ data, rendered }) => (
+          <article class:list={['article-block', { abrogato: data.abrogato }]} id={`art-${data.numero}`}>
+            <h3>{data.titolo}</h3>
+            <div class="article-text">
+              <rendered.Content />
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <!-- Parte I -->
+      <section class="constitution-section">
+        <h2 id="parte-1">Parte I - Diritti e Doveri dei Cittadini</h2>
+        
+        {costituzioneStructure.parti[0].titoli.map((titolo) => (
+          <div class="titolo-block">
+            <h3 id={`titolo-1-${titolo.numero.toLowerCase()}`}>Titolo {titolo.numero} - {titolo.nome}</h3>
+            {renderedArticoli.filter(a => a.data.parte === 'I' && a.data.titolo_sezione === titolo.numero).map(({ data, rendered }) => (
+              <article class:list={['article-block', { abrogato: data.abrogato }]} id={`art-${data.numero}`}>
+                <h4>{data.titolo}</h4>
+                <div class="article-text">
+                  <rendered.Content />
+                </div>
+              </article>
+            ))}
+          </div>
+        ))}
+      </section>
+
+      <!-- Parte II -->
+      <section class="constitution-section">
+        <h2 id="parte-2">Parte II - Ordinamento della Repubblica</h2>
+        
+        {costituzioneStructure.parti[1].titoli.map((titolo) => (
+          <div class="titolo-block">
+            <h3 id={`titolo-2-${titolo.numero.toLowerCase()}`}>Titolo {titolo.numero} - {titolo.nome}</h3>
+            
+            {titolo.sezioni ? (
+              titolo.sezioni.map((sezione) => (
+                <div class="sezione-block">
+                  <h4>Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}</h4>
+                  {renderedArticoli.filter(a => sezione.articoli.includes(a.data.numero as number)).map(({ data, rendered }) => (
+                    <article class:list={['article-block', { abrogato: data.abrogato }]} id={`art-${data.numero}`}>
+                      <h5>{data.titolo}</h5>
+                      <div class="article-text">
+                        <rendered.Content />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ))
+            ) : (
+              renderedArticoli.filter(a => a.data.parte === 'II' && a.data.titolo_sezione === titolo.numero).map(({ data, rendered }) => (
+                <article class:list={['article-block', { abrogato: data.abrogato }]} id={`art-${data.numero}`}>
+                  <h4>{data.titolo}</h4>
+                  <div class="article-text">
+                    <rendered.Content />
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        ))}
+      </section>
+
+      <!-- Disposizioni Transitorie -->
+      <section class="constitution-section">
+        <h2 id="disposizioni-transitorie">Disposizioni Transitorie e Finali</h2>
+        {renderedDisposizioni.map(({ data, rendered }) => (
+          <article class:list={['article-block', { abrogato: data.abrogato }]} id={`disp-${(data.numero as string).toLowerCase()}`}>
+            <h3>{data.numero}.</h3>
+            <div class="article-text">
+              <rendered.Content />
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <!-- Signatures -->
+      <footer class="signatures">
+        <p><em>Data a Roma, addì 27 dicembre 1947.</em></p>
+        <p><em>Enrico De Nicola</em></p>
+        <p class="controfirme"><strong>CONTROFIRMANO:</strong></p>
+        <p>Il Presidente dell'Assemblea Costituente<br><em>Umberto Terracini</em></p>
+        <p>Il Presidente del Consiglio dei Ministri<br><em>Alcide De Gasperi</em></p>
+        <p>Visto, il Guardasigilli:<br><em>Giuseppe Grassi</em></p>
+      </footer>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .full-text-page {
+    padding: var(--space-8) 0;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .page-header h1 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .page-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .print-btn {
+    gap: var(--space-2);
+  }
+
+  .preamble {
+    max-width: var(--max-width-content);
+    margin: 0 auto var(--space-12);
+    padding: var(--space-8);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    text-align: center;
+  }
+
+  .preamble p {
+    margin-bottom: var(--space-4);
+  }
+
+  .constitution-section {
+    max-width: var(--max-width-content);
+    margin: 0 auto var(--space-12);
+    page-break-before: always;
+  }
+
+  .constitution-section > h2 {
+    font-size: var(--text-3xl);
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .titolo-block {
+    margin-bottom: var(--space-10);
+  }
+
+  .titolo-block > h3 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .sezione-block {
+    margin-bottom: var(--space-8);
+  }
+
+  .sezione-block > h4 {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .article-block {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .article-block h3,
+  .article-block h4,
+  .article-block h5 {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .article-text {
+    font-family: var(--font-serif);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  .article-text :global(p) {
+    margin-bottom: var(--space-3);
+    text-align: justify;
+  }
+
+  .article-text :global(ul) {
+    margin: var(--space-3) 0;
+    padding-left: var(--space-6);
+  }
+
+  .article-block.abrogato {
+    opacity: 0.6;
+  }
+
+  .article-block.abrogato .article-text {
+    font-style: italic;
+  }
+
+  .signatures {
+    max-width: var(--max-width-content);
+    margin: var(--space-12) auto 0;
+    padding-top: var(--space-8);
+    border-top: 2px solid var(--color-primary);
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+  }
+
+  .signatures p {
+    margin-bottom: var(--space-4);
+  }
+
+  .controfirme {
+    margin-top: var(--space-8) !important;
+  }
+
+  @media print {
+    .print-btn {
+      display: none;
+    }
+
+    .constitution-section {
+      page-break-before: always;
+    }
+
+    .article-block {
+      page-break-inside: avoid;
+    }
+  }
+</style>

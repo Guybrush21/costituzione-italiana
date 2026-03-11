@@ -1,0 +1,128 @@
+---
+// Header component with navigation, search, and dark mode toggle
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" opacity="0.2"/>
+        <path d="M4 10V19H8V14H16V19H20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 19H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 2L2 7H22L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Costituzione Italiana</span>
+    </a>
+    
+    <nav class="header-nav">
+      <a href="/principi-fondamentali">Principî Fondamentali</a>
+      <a href="/parte/1">Parte I</a>
+      <a href="/parte/2">Parte II</a>
+      <a href="/disposizioni-transitorie">Disposizioni</a>
+    </nav>
+    
+    <div class="header-actions">
+      <button 
+        type="button" 
+        class="search-trigger" 
+        id="search-trigger"
+        aria-label="Cerca nella Costituzione"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <span>Cerca...</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </button>
+      
+      <button 
+        type="button" 
+        class="theme-toggle" 
+        id="theme-toggle"
+        aria-label="Cambia tema"
+      >
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      
+      <!-- Mobile menu button -->
+      <button 
+        type="button" 
+        class="btn btn-ghost btn-icon mobile-menu-toggle"
+        id="mobile-menu-toggle"
+        aria-label="Menu"
+        style="display: none;"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Theme toggle functionality
+  const themeToggle = document.getElementById('theme-toggle');
+  const sunIcon = themeToggle?.querySelector('.sun-icon');
+  const moonIcon = themeToggle?.querySelector('.moon-icon');
+  
+  function updateIcons() {
+    const theme = document.documentElement.getAttribute('data-theme');
+    if (sunIcon && moonIcon) {
+      if (theme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+  }
+  
+  // Initial icon state
+  updateIcons();
+  
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateIcons();
+  });
+  
+  // Search trigger - keyboard shortcut
+  const searchTrigger = document.getElementById('search-trigger');
+  
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      // TODO: Open search modal
+      searchTrigger?.click();
+    }
+  });
+  
+  searchTrigger?.addEventListener('click', () => {
+    // TODO: Open search modal
+    console.log('Search clicked - modal to be implemented');
+  });
+</script>
+
+<style>
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      display: flex !important;
+    }
+    
+    .search-trigger span,
+    .search-trigger .search-kbd {
+      display: none;
+    }
+  }
+</style>
