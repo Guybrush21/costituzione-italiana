@@ -20,12 +20,12 @@ disposizioni.sort((a, b) => romanOrder.indexOf(a.data.numero as string) - romanO
     <div class="max-w-6xl mx-auto px-4">
       <header class="max-w-3xl mx-auto mb-10 text-center">
         <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
-          <a href="/" class="text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400">Home</a>
+          <a href="/" class="text-gray-600 hover:text-primary no-underline">Home</a>
           <span class="text-gray-300">/</span>
-          <span class="text-gray-900 [data-theme='dark']:text-gray-100">Disposizioni Transitorie e Finali</span>
+          <span class="text-gray-900">Disposizioni Transitorie e Finali</span>
         </nav>
         <h1 class="font-serif text-4xl text-primary mb-4">Disposizioni Transitorie e Finali</h1>
-        <p class="text-lg text-gray-600 max-w-xl mx-auto [data-theme='dark']:text-gray-400">
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">
           Le diciotto disposizioni transitorie e finali che accompagnano la 
           Costituzione Italiana, regolando il passaggio dal vecchio al nuovo ordinamento.
         </p>
@@ -33,11 +33,11 @@ disposizioni.sort((a, b) => romanOrder.indexOf(a.data.numero as string) - romanO
 
       <div class="grid gap-4 max-w-3xl mx-auto">
         {disposizioni.map((disp) => (
-          <a href={`/disposizione/${(disp.data.numero as string).toLowerCase()}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">
+          <a href={`/disposizione/${(disp.data.numero as string).toLowerCase()}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline">
             <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
               {disp.data.numero}
             </span>
-            <p class="m-0 text-gray-600 font-serif leading-relaxed [data-theme='dark']:text-gray-400">
+            <p class="m-0 text-gray-600 font-serif leading-relaxed">
               {disp.data.descrizione}
             </p>
           </a>

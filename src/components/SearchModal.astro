@@ -21,8 +21,8 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
 
 <div id="search-modal" class="fixed inset-0 z-[1000] flex items-start justify-center pt-[10vh]" hidden>
   <div class="search-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-  <div class="relative w-full max-w-xl mx-4 bg-white rounded-xl shadow-2xl overflow-hidden [data-theme='dark']:bg-gray-900" role="dialog" aria-modal="true" aria-labelledby="search-title">
-    <div class="p-4 border-b border-gray-200 [data-theme='dark']:border-gray-700">
+  <div class="relative w-full max-w-xl mx-4 bg-white rounded-xl shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="search-title">
+    <div class="p-4 border-b border-gray-200">
       <h2 id="search-title" class="sr-only">Cerca nella Costituzione</h2>
       <div class="flex items-center gap-3">
         <svg class="shrink-0 w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -32,12 +32,12 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
         <input 
           type="search" 
           id="search-input"
-          class="flex-1 py-2 text-lg border-none bg-transparent text-gray-900 outline-none placeholder:text-gray-400 [data-theme='dark']:text-gray-100"
+          class="flex-1 py-2 text-lg border-none bg-transparent text-gray-900 outline-none placeholder:text-gray-400"
           placeholder="Cerca articoli, parole chiave..."
           autocomplete="off"
           autofocus
         />
-        <kbd class="shrink-0 px-2 py-1 font-mono text-xs bg-gray-100 border border-gray-200 rounded text-gray-500 [data-theme='dark']:bg-gray-800 [data-theme='dark']:border-gray-700">ESC</kbd>
+        <kbd class="shrink-0 px-2 py-1 font-mono text-xs bg-gray-100 border border-gray-200 rounded text-gray-500">ESC</kbd>
       </div>
     </div>
     <div class="max-h-[50vh] overflow-y-auto">
@@ -45,18 +45,18 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
         <p class="py-6 text-center text-gray-500">Inizia a digitare per cercare nella Costituzione...</p>
       </div>
     </div>
-    <div class="flex gap-4 px-4 py-3 border-t border-gray-200 bg-gray-50 [data-theme='dark']:border-gray-700 [data-theme='dark']:bg-gray-800">
+    <div class="flex gap-4 px-4 py-3 border-t border-gray-200 bg-gray-50">
       <span class="flex items-center gap-1 text-xs text-gray-500">
-        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">↑</kbd>
-        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">↓</kbd>
+        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded">↑</kbd>
+        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded">↓</kbd>
         per navigare
       </span>
       <span class="flex items-center gap-1 text-xs text-gray-500">
-        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">↵</kbd>
+        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded">↵</kbd>
         per aprire
       </span>
       <span class="flex items-center gap-1 text-xs text-gray-500">
-        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">ESC</kbd>
+        <kbd class="px-1 font-mono bg-white border border-gray-200 rounded">ESC</kbd>
         per chiudere
       </span>
     </div>
@@ -135,9 +135,9 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
       const label = item.tipo === 'articolo' ? `Art. ${item.numero}` : `Disp. ${item.numero}`;
       
       return `
-        <a href="${item.url}" class="search-result flex items-center gap-3 p-3 rounded-lg text-gray-900 no-underline transition-colors hover:bg-primary-bg [data-theme='dark']:text-gray-100" data-index="${index}">
-          <span class="shrink-0 px-2 py-1 text-sm font-semibold text-primary bg-gray-100 rounded [data-theme='dark']:bg-gray-800">${label}</span>
-          <span class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap [data-theme='dark']:text-gray-400">${highlightMatch(item.descrizione, query)}</span>
+        <a href="${item.url}" class="search-result flex items-center gap-3 p-3 rounded-lg text-gray-900 no-underline transition-colors hover:bg-primary-bg" data-index="${index}">
+          <span class="shrink-0 px-2 py-1 text-sm font-semibold text-primary bg-gray-100 rounded">${label}</span>
+          <span class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">${highlightMatch(item.descrizione, query)}</span>
         </a>
       `;
     }).join('');

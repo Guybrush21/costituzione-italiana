@@ -40,7 +40,7 @@ export interface ConstitutionStructure {
 
 export const costituzioneStructure: ConstitutionStructure = {
   principiFondamentali: {
-    nome: 'Principî Fondamentali',
+    nome: 'Principi Fondamentali',
     articoli: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   },
   parti: [
