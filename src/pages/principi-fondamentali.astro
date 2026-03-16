@@ -12,31 +12,31 @@ articoli.sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
 ---
 
 <Layout 
-  title="Principî Fondamentali" 
-  description="I principî fondamentali della Costituzione Italiana, articoli 1-12."
+  title="Principi Fondamentali" 
+  description="I principi fondamentali della Costituzione Italiana, articoli 1-12."
 >
   <main class="py-8">
     <div class="max-w-6xl mx-auto px-4">
       <header class="max-w-3xl mx-auto mb-10 text-center">
         <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
-          <a href="/" class="text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400">Home</a>
+          <a href="/" class="text-gray-600 hover:text-primary no-underline">Home</a>
           <span class="text-gray-300">/</span>
-          <span class="text-gray-900 [data-theme='dark']:text-gray-100">Principî Fondamentali</span>
+          <span class="text-gray-900">Principi Fondamentali</span>
         </nav>
-        <h1 class="font-serif text-4xl text-primary mb-4">Principî Fondamentali</h1>
-        <p class="text-lg text-gray-600 max-w-xl mx-auto [data-theme='dark']:text-gray-400">
-          I dodici articoli che costituiscono i principî fondamentali della 
+        <h1 class="font-serif text-4xl text-primary mb-4">Principi Fondamentali</h1>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">
+          I dodici articoli che costituiscono i principi fondamentali della 
           Costituzione Italiana definiscono i valori su cui si fonda la Repubblica.
         </p>
       </header>
 
       <div class="grid gap-4 max-w-3xl mx-auto">
         {articoli.map((articolo) => (
-          <a href={`/articolo/${articolo.data.numero}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">
+          <a href={`/articolo/${articolo.data.numero}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline">
             <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
               Art. {articolo.data.numero}
             </span>
-            <p class="m-0 text-gray-600 font-serif leading-relaxed [data-theme='dark']:text-gray-400">
+            <p class="m-0 text-gray-600 font-serif leading-relaxed">
               {articolo.data.descrizione}
             </p>
           </a>

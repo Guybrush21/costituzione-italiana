@@ -55,7 +55,7 @@ const renderedDisposizioni = await Promise.all(
       </header>
 
       <!-- Preamble -->
-      <section class="max-w-3xl mx-auto mb-12 p-8 bg-gray-50 rounded-xl font-serif text-lg leading-relaxed text-center [data-theme='dark']:bg-gray-900">
+      <section class="max-w-3xl mx-auto mb-12 p-8 bg-gray-50 rounded-xl font-serif text-lg leading-relaxed text-center">
         <p class="mb-4"><strong>IL CAPO PROVVISORIO DELLO STATO</strong></p>
         <p class="mb-4">
           Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
@@ -66,18 +66,18 @@ const renderedDisposizioni = await Promise.all(
         <p class="m-0">la Costituzione della Repubblica Italiana nel seguente testo:</p>
       </section>
 
-      <!-- Principî Fondamentali -->
+      <!-- Principi Fondamentali -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="principi-fondamentali" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 [data-theme='dark']:border-gray-700">
-          Principî Fondamentali
+        <h2 id="principi-fondamentali" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300">
+          Principi Fondamentali
         </h2>
         {renderedArticoli.filter(a => a.data.sezione === 'principi-fondamentali').map(({ data, rendered }) => (
           <article 
-            class:list={['mb-6 pb-6 border-b border-gray-200 [data-theme="dark"]:border-gray-800', { 'opacity-60': data.abrogato }]} 
+            class:list={['mb-6 pb-6 border-b border-gray-200', { 'opacity-60': data.abrogato }]} 
             id={`art-${data.numero}`}
           >
             <h3 class="text-base font-semibold text-primary mb-3">{data.titolo}</h3>
-            <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none [data-theme="dark"]:prose-invert', { 'italic': data.abrogato }]}>
+            <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
               <rendered.Content />
             </div>
           </article>
@@ -86,22 +86,22 @@ const renderedDisposizioni = await Promise.all(
 
       <!-- Parte I -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="parte-1" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 [data-theme='dark']:border-gray-700">
+        <h2 id="parte-1" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300">
           Parte I - Diritti e Doveri dei Cittadini
         </h2>
         
         {costituzioneStructure.parti[0].titoli.map((titolo) => (
           <div class="mb-10">
-            <h3 id={`titolo-1-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif mb-6 pb-2 border-b border-gray-200 [data-theme='dark']:border-gray-800">
+            <h3 id={`titolo-1-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif mb-6 pb-2 border-b border-gray-200">
               Titolo {titolo.numero} - {titolo.nome}
             </h3>
             {renderedArticoli.filter(a => a.data.parte === 'I' && a.data.titolo_sezione === titolo.numero).map(({ data, rendered }) => (
               <article 
-                class:list={['mb-6 pb-6 border-b border-gray-200 [data-theme="dark"]:border-gray-800', { 'opacity-60': data.abrogato }]} 
+                class:list={['mb-6 pb-6 border-b border-gray-200', { 'opacity-60': data.abrogato }]} 
                 id={`art-${data.numero}`}
               >
                 <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none [data-theme="dark"]:prose-invert', { 'italic': data.abrogato }]}>
+                <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
                   <rendered.Content />
                 </div>
               </article>
@@ -112,29 +112,29 @@ const renderedDisposizioni = await Promise.all(
 
       <!-- Parte II -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="parte-2" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 [data-theme='dark']:border-gray-700">
+        <h2 id="parte-2" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300">
           Parte II - Ordinamento della Repubblica
         </h2>
         
         {costituzioneStructure.parti[1].titoli.map((titolo) => (
           <div class="mb-10">
-            <h3 id={`titolo-2-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif mb-6 pb-2 border-b border-gray-200 [data-theme='dark']:border-gray-800">
+            <h3 id={`titolo-2-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif mb-6 pb-2 border-b border-gray-200">
               Titolo {titolo.numero} - {titolo.nome}
             </h3>
             
             {titolo.sezioni ? (
               titolo.sezioni.map((sezione) => (
                 <div class="mb-8">
-                  <h4 class="text-lg text-gray-600 mb-4 [data-theme='dark']:text-gray-400">
+                  <h4 class="text-lg text-gray-600 mb-4">
                     Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}
                   </h4>
                   {renderedArticoli.filter(a => sezione.articoli.includes(a.data.numero as number)).map(({ data, rendered }) => (
                     <article 
-                      class:list={['mb-6 pb-6 border-b border-gray-200 [data-theme="dark"]:border-gray-800', { 'opacity-60': data.abrogato }]} 
+                      class:list={['mb-6 pb-6 border-b border-gray-200', { 'opacity-60': data.abrogato }]} 
                       id={`art-${data.numero}`}
                     >
                       <h5 class="text-base font-semibold text-primary mb-3">{data.titolo}</h5>
-                      <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none [data-theme="dark"]:prose-invert', { 'italic': data.abrogato }]}>
+                      <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
                         <rendered.Content />
                       </div>
                     </article>
@@ -144,11 +144,11 @@ const renderedDisposizioni = await Promise.all(
             ) : (
               renderedArticoli.filter(a => a.data.parte === 'II' && a.data.titolo_sezione === titolo.numero).map(({ data, rendered }) => (
                 <article 
-                  class:list={['mb-6 pb-6 border-b border-gray-200 [data-theme="dark"]:border-gray-800', { 'opacity-60': data.abrogato }]} 
+                  class:list={['mb-6 pb-6 border-b border-gray-200', { 'opacity-60': data.abrogato }]} 
                   id={`art-${data.numero}`}
                 >
                   <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                  <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none [data-theme="dark"]:prose-invert', { 'italic': data.abrogato }]}>
+                  <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
                     <rendered.Content />
                   </div>
                 </article>
@@ -160,16 +160,16 @@ const renderedDisposizioni = await Promise.all(
 
       <!-- Disposizioni Transitorie -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="disposizioni-transitorie" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 [data-theme='dark']:border-gray-700">
+        <h2 id="disposizioni-transitorie" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300">
           Disposizioni Transitorie e Finali
         </h2>
         {renderedDisposizioni.map(({ data, rendered }) => (
           <article 
-            class:list={['mb-6 pb-6 border-b border-gray-200 [data-theme="dark"]:border-gray-800', { 'opacity-60': data.abrogato }]} 
+            class:list={['mb-6 pb-6 border-b border-gray-200', { 'opacity-60': data.abrogato }]} 
             id={`disp-${(data.numero as string).toLowerCase()}`}
           >
             <h3 class="text-base font-semibold text-primary mb-3">{data.numero}.</h3>
-            <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none [data-theme="dark"]:prose-invert', { 'italic': data.abrogato }]}>
+            <div class:list={['font-serif leading-relaxed prose prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
               <rendered.Content />
             </div>
           </article>

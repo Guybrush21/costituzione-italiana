@@ -1,10 +1,10 @@
 ---
-// Header component with navigation, search, and dark mode toggle
+// Header component with navigation and search
 ---
 
-<header class="sticky top-0 z-50 h-16 bg-white/95 backdrop-blur border-b border-gray-200 [data-theme='dark']:bg-gray-950/95 [data-theme='dark']:border-gray-800">
+<header class="sticky top-0 z-50 h-16 bg-white/95 backdrop-blur border-b border-gray-200">
   <div class="flex items-center justify-between h-full max-w-6xl mx-auto px-4">
-    <a href="/" class="flex items-center gap-3 font-serif text-lg font-semibold text-gray-900 hover:text-primary no-underline [data-theme='dark']:text-gray-100">
+    <a href="/" class="flex items-center gap-3 font-serif text-lg font-semibold text-gray-900 hover:text-primary no-underline">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" opacity="0.2"/>
         <path d="M4 10V19H8V14H16V19H20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -15,16 +15,16 @@
     </a>
     
     <nav class="hidden md:flex items-center gap-6">
-      <a href="/principi-fondamentali" class="text-sm font-medium text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:text-primary">Principî Fondamentali</a>
-      <a href="/parte/1" class="text-sm font-medium text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:text-primary">Parte I</a>
-      <a href="/parte/2" class="text-sm font-medium text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:text-primary">Parte II</a>
-      <a href="/disposizioni-transitorie" class="text-sm font-medium text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:text-primary">Disposizioni</a>
+      <a href="/principi-fondamentali" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Principi Fondamentali</a>
+      <a href="/parte/1" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Parte I</a>
+      <a href="/parte/2" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Parte II</a>
+      <a href="/disposizioni-transitorie" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Disposizioni</a>
     </nav>
     
     <div class="flex items-center gap-4">
       <button 
         type="button" 
-        class="flex items-center gap-2 px-3 py-2 bg-gray-100 border border-gray-200 rounded-lg text-gray-500 text-sm cursor-pointer transition-colors hover:border-gray-300 hover:bg-gray-200 [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700 [data-theme='dark']:hover:bg-gray-800"
+        class="flex items-center gap-2 px-3 py-2 bg-gray-100 border border-gray-200 rounded-lg text-gray-500 text-sm cursor-pointer transition-colors hover:border-gray-300 hover:bg-gray-200"
         id="search-trigger"
         aria-label="Cerca nella Costituzione"
       >
@@ -33,28 +33,13 @@
           <path d="m21 21-4.35-4.35"/>
         </svg>
         <span class="hidden sm:inline">Cerca...</span>
-        <kbd class="hidden sm:inline font-mono text-xs px-1.5 py-0.5 bg-gray-200 rounded [data-theme='dark']:bg-gray-700">⌘K</kbd>
-      </button>
-      
-      <button 
-        type="button" 
-        class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:bg-gray-800 [data-theme='dark']:hover:text-gray-100"
-        id="theme-toggle"
-        aria-label="Cambia tema"
-      >
-        <svg class="sun-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-        </svg>
-        <svg class="moon-icon w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
+        <kbd class="hidden sm:inline font-mono text-xs px-1.5 py-0.5 bg-gray-200 rounded">⌘K</kbd>
       </button>
       
       <!-- Mobile menu button -->
       <button 
         type="button" 
-        class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:bg-gray-800"
+        class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
         id="mobile-menu-toggle"
         aria-label="Menu"
       >
@@ -67,35 +52,6 @@
 </header>
 
 <script>
-  // Theme toggle functionality
-  const themeToggle = document.getElementById('theme-toggle');
-  const sunIcon = themeToggle?.querySelector('.sun-icon');
-  const moonIcon = themeToggle?.querySelector('.moon-icon');
-  
-  function updateIcons() {
-    const theme = document.documentElement.getAttribute('data-theme');
-    if (sunIcon && moonIcon) {
-      if (theme === 'dark') {
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
-      } else {
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
-      }
-    }
-  }
-  
-  // Initial icon state
-  updateIcons();
-  
-  themeToggle?.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateIcons();
-  });
-  
   // Search trigger - keyboard shortcut
   const searchTrigger = document.getElementById('search-trigger');
   

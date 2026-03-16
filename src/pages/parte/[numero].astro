@@ -20,16 +20,6 @@ const articoli = await getCollection('articoli', ({ data }) =>
 
 // Sort by article number
 articoli.sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
-
-// Group by titolo
-const articoliByTitolo = new Map<string, typeof articoli>();
-for (const articolo of articoli) {
-  const key = articolo.data.titolo_sezione || 'other';
-  if (!articoliByTitolo.has(key)) {
-    articoliByTitolo.set(key, []);
-  }
-  articoliByTitolo.get(key)!.push(articolo);
-}
 ---
 
 <Layout 
@@ -40,78 +30,33 @@ for (const articolo of articoli) {
     <div class="max-w-6xl mx-auto px-4">
       <header class="max-w-3xl mx-auto mb-10 text-center">
         <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
-          <a href="/" class="text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400">Home</a>
+          <a href="/" class="text-gray-600 hover:text-primary no-underline">Home</a>
           <span class="text-gray-300">/</span>
-          <span class="text-gray-900 [data-theme='dark']:text-gray-100">Parte {parte.numero}</span>
+          <span class="text-gray-900">Parte {parte.numero}</span>
         </nav>
-        <h1 class="font-serif text-4xl text-primary mb-2">Parte {parte.numero}</h1>
-        <p class="font-serif text-2xl text-gray-900 mb-2 [data-theme='dark']:text-gray-100">{parte.nome}</p>
-        <p class="text-gray-500">
+        <h1 class="font-serif text-4xl text-primary mb-4">Parte {parte.numero} - {parte.nome}</h1>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">
           Articoli {parte.titoli[0].articoli[0]} - {parte.titoli[parte.titoli.length - 1].articoli[parte.titoli[parte.titoli.length - 1].articoli.length - 1]}
         </p>
       </header>
 
-      <div class="max-w-3xl mx-auto space-y-10">
-        {parte.titoli.map((titolo) => {
-          const titoloArticoli = articoliByTitolo.get(titolo.numero) || [];
-          return (
-            <section class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
-              <h2 class="font-serif text-xl mb-6 pb-4 border-b border-gray-200 [data-theme='dark']:border-gray-700">
-                Titolo {titolo.numero} - {titolo.nome}
-              </h2>
-              
-              {titolo.sezioni ? (
-                <div class="space-y-6">
-                  {titolo.sezioni.map((sezione) => {
-                    const sezioneArticoli = titoloArticoli.filter(a => 
-                      sezione.articoli.includes(a.data.numero as number)
-                    );
-                    return (
-                      <div>
-                        <h3 class="text-base font-semibold text-gray-600 mb-3 [data-theme='dark']:text-gray-400">
-                          Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                          {sezioneArticoli.map((articolo) => (
-                            <a 
-                              href={`/articolo/${articolo.data.numero}`} 
-                              class:list={[
-                                'inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme="dark"]:bg-gray-800 [data-theme="dark"]:border-gray-700 [data-theme="dark"]:text-gray-300',
-                                { 'opacity-60': articolo.data.abrogato }
-                              ]}
-                            >
-                              <span>Art. {articolo.data.numero}</span>
-                              {articolo.data.abrogato && (
-                                <span class="text-xs px-1 bg-red-500 text-white rounded">abrogato</span>
-                              )}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div class="flex flex-wrap gap-2">
-                  {titoloArticoli.map((articolo) => (
-                    <a 
-                      href={`/articolo/${articolo.data.numero}`} 
-                      class:list={[
-                        'inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme="dark"]:bg-gray-800 [data-theme="dark"]:border-gray-700 [data-theme="dark"]:text-gray-300',
-                        { 'opacity-60': articolo.data.abrogato }
-                      ]}
-                    >
-                      <span>Art. {articolo.data.numero}</span>
-                      {articolo.data.abrogato && (
-                        <span class="text-xs px-1 bg-red-500 text-white rounded">abrogato</span>
-                      )}
-                    </a>
-                  ))}
-                </div>
+      <div class="grid gap-4 max-w-3xl mx-auto">
+        {articoli.map((articolo) => (
+          <a href={`/articolo/${articolo.data.numero}`} class:list={[
+            "block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline",
+            { 'opacity-60': articolo.data.abrogato }
+          ]}>
+            <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
+              Art. {articolo.data.numero}
+              {articolo.data.abrogato && (
+                <span class="ml-2 text-xs px-1 bg-red-500 rounded">abrogato</span>
               )}
-            </section>
-          );
-        })}
+            </span>
+            <p class="m-0 text-gray-600 font-serif leading-relaxed">
+              {articolo.data.descrizione}
+            </p>
+          </a>
+        ))}
       </div>
     </div>
   </main>
