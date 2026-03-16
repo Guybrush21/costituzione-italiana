@@ -15,94 +15,33 @@ articoli.sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
   title="Principî Fondamentali" 
   description="I principî fondamentali della Costituzione Italiana, articoli 1-12."
 >
-  <main class="section-page">
-    <div class="container">
-      <header class="section-header">
-        <nav class="breadcrumb">
-          <a href="/">Home</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>Principî Fondamentali</span>
+  <main class="py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <header class="max-w-3xl mx-auto mb-10 text-center">
+        <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
+          <a href="/" class="text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400">Home</a>
+          <span class="text-gray-300">/</span>
+          <span class="text-gray-900 [data-theme='dark']:text-gray-100">Principî Fondamentali</span>
         </nav>
-        <h1>Principî Fondamentali</h1>
-        <p class="section-description">
+        <h1 class="font-serif text-4xl text-primary mb-4">Principî Fondamentali</h1>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto [data-theme='dark']:text-gray-400">
           I dodici articoli che costituiscono i principî fondamentali della 
           Costituzione Italiana definiscono i valori su cui si fonda la Repubblica.
         </p>
       </header>
 
-      <div class="articles-list">
+      <div class="grid gap-4 max-w-3xl mx-auto">
         {articoli.map((articolo) => (
-          <a href={`/articolo/${articolo.data.numero}`} class="article-card">
-            <span class="article-card-number">Art. {articolo.data.numero}</span>
-            <p class="article-card-excerpt">{articolo.data.descrizione}</p>
+          <a href={`/articolo/${articolo.data.numero}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline [data-theme='dark']:bg-gray-900 [data-theme='dark']:border-gray-700">
+            <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
+              Art. {articolo.data.numero}
+            </span>
+            <p class="m-0 text-gray-600 font-serif leading-relaxed [data-theme='dark']:text-gray-400">
+              {articolo.data.descrizione}
+            </p>
           </a>
         ))}
       </div>
     </div>
   </main>
 </Layout>
-
-<style>
-  .section-page {
-    padding: var(--space-8) 0;
-  }
-
-  .section-header {
-    max-width: var(--max-width-content);
-    margin: 0 auto var(--space-10);
-    text-align: center;
-  }
-
-  .section-header h1 {
-    margin-top: var(--space-4);
-    color: var(--color-primary);
-  }
-
-  .section-description {
-    font-size: var(--text-lg);
-    color: var(--color-text-secondary);
-    max-width: 40rem;
-    margin: 0 auto;
-  }
-
-  .articles-list {
-    display: grid;
-    gap: var(--space-4);
-    max-width: var(--max-width-content);
-    margin: 0 auto;
-  }
-
-  .article-card {
-    display: block;
-    padding: var(--space-5);
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-  }
-
-  .article-card:hover {
-    border-color: var(--color-primary);
-    background-color: var(--color-primary-bg);
-    text-decoration: none;
-  }
-
-  .article-card-number {
-    display: inline-block;
-    padding: var(--space-1) var(--space-3);
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: var(--radius-sm);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    margin-bottom: var(--space-3);
-  }
-
-  .article-card-excerpt {
-    margin: 0;
-    color: var(--color-text-secondary);
-    font-family: var(--font-serif);
-    font-size: var(--text-base);
-    line-height: var(--leading-relaxed);
-  }
-</style>

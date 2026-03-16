@@ -36,45 +36,54 @@ for (const articolo of articoli) {
   title={`Parte ${parte.numero} - ${parte.nome}`} 
   description={`${parte.nome} - Costituzione della Repubblica Italiana`}
 >
-  <main class="section-page">
-    <div class="container">
-      <header class="section-header">
-        <nav class="breadcrumb">
-          <a href="/">Home</a>
-          <span class="breadcrumb-separator">/</span>
-          <span>Parte {parte.numero}</span>
+  <main class="py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <header class="max-w-3xl mx-auto mb-10 text-center">
+        <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
+          <a href="/" class="text-gray-600 hover:text-primary no-underline [data-theme='dark']:text-gray-400">Home</a>
+          <span class="text-gray-300">/</span>
+          <span class="text-gray-900 [data-theme='dark']:text-gray-100">Parte {parte.numero}</span>
         </nav>
-        <h1>Parte {parte.numero}</h1>
-        <p class="section-title-main">{parte.nome}</p>
-        <p class="section-description">
+        <h1 class="font-serif text-4xl text-primary mb-2">Parte {parte.numero}</h1>
+        <p class="font-serif text-2xl text-gray-900 mb-2 [data-theme='dark']:text-gray-100">{parte.nome}</p>
+        <p class="text-gray-500">
           Articoli {parte.titoli[0].articoli[0]} - {parte.titoli[parte.titoli.length - 1].articoli[parte.titoli[parte.titoli.length - 1].articoli.length - 1]}
         </p>
       </header>
 
-      <div class="titoli-sections">
+      <div class="max-w-3xl mx-auto space-y-10">
         {parte.titoli.map((titolo) => {
           const titoloArticoli = articoliByTitolo.get(titolo.numero) || [];
           return (
-            <section class="titolo-section">
-              <h2>Titolo {titolo.numero} - {titolo.nome}</h2>
+            <section class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
+              <h2 class="font-serif text-xl mb-6 pb-4 border-b border-gray-200 [data-theme='dark']:border-gray-700">
+                Titolo {titolo.numero} - {titolo.nome}
+              </h2>
               
               {titolo.sezioni ? (
-                <div class="sezioni-list">
+                <div class="space-y-6">
                   {titolo.sezioni.map((sezione) => {
                     const sezioneArticoli = titoloArticoli.filter(a => 
                       sezione.articoli.includes(a.data.numero as number)
                     );
                     return (
-                      <div class="sezione-group">
-                        <h3>Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}</h3>
-                        <div class="articles-grid">
+                      <div>
+                        <h3 class="text-base font-semibold text-gray-600 mb-3 [data-theme='dark']:text-gray-400">
+                          Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
                           {sezioneArticoli.map((articolo) => (
                             <a 
                               href={`/articolo/${articolo.data.numero}`} 
-                              class:list={['article-link', { abrogato: articolo.data.abrogato }]}
+                              class:list={[
+                                'inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme="dark"]:bg-gray-800 [data-theme="dark"]:border-gray-700 [data-theme="dark"]:text-gray-300',
+                                { 'opacity-60': articolo.data.abrogato }
+                              ]}
                             >
-                              <span class="article-num">Art. {articolo.data.numero}</span>
-                              {articolo.data.abrogato && <span class="badge-abrogato">abrogato</span>}
+                              <span>Art. {articolo.data.numero}</span>
+                              {articolo.data.abrogato && (
+                                <span class="text-xs px-1 bg-red-500 text-white rounded">abrogato</span>
+                              )}
                             </a>
                           ))}
                         </div>
@@ -83,14 +92,19 @@ for (const articolo of articoli) {
                   })}
                 </div>
               ) : (
-                <div class="articles-grid">
+                <div class="flex flex-wrap gap-2">
                   {titoloArticoli.map((articolo) => (
                     <a 
                       href={`/articolo/${articolo.data.numero}`} 
-                      class:list={['article-link', { abrogato: articolo.data.abrogato }]}
+                      class:list={[
+                        'inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme="dark"]:bg-gray-800 [data-theme="dark"]:border-gray-700 [data-theme="dark"]:text-gray-300',
+                        { 'opacity-60': articolo.data.abrogato }
+                      ]}
                     >
-                      <span class="article-num">Art. {articolo.data.numero}</span>
-                      {articolo.data.abrogato && <span class="badge-abrogato">abrogato</span>}
+                      <span>Art. {articolo.data.numero}</span>
+                      {articolo.data.abrogato && (
+                        <span class="text-xs px-1 bg-red-500 text-white rounded">abrogato</span>
+                      )}
                     </a>
                   ))}
                 </div>
@@ -102,100 +116,3 @@ for (const articolo of articoli) {
     </div>
   </main>
 </Layout>
-
-<style>
-  .section-page {
-    padding: var(--space-8) 0;
-  }
-
-  .section-header {
-    max-width: var(--max-width-content);
-    margin: 0 auto var(--space-10);
-    text-align: center;
-  }
-
-  .section-header h1 {
-    margin-top: var(--space-4);
-    margin-bottom: var(--space-2);
-    color: var(--color-primary);
-  }
-
-  .section-title-main {
-    font-family: var(--font-serif);
-    font-size: var(--text-2xl);
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-2);
-  }
-
-  .section-description {
-    color: var(--color-text-muted);
-  }
-
-  .titoli-sections {
-    max-width: var(--max-width-content);
-    margin: 0 auto;
-  }
-
-  .titolo-section {
-    margin-bottom: var(--space-10);
-    padding: var(--space-6);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-  }
-
-  .titolo-section h2 {
-    margin-bottom: var(--space-6);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-border-light);
-  }
-
-  .sezioni-list {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  .sezione-group h3 {
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    font-weight: 600;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-3);
-  }
-
-  .articles-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .article-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    background-color: var(--color-bg-primary);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
-  }
-
-  .article-link:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .article-link.abrogato {
-    opacity: 0.6;
-  }
-
-  .badge-abrogato {
-    font-size: var(--text-xs);
-    padding: 0 var(--space-1);
-    background-color: var(--color-abrogato);
-    color: white;
-    border-radius: var(--radius-sm);
-  }
-</style>

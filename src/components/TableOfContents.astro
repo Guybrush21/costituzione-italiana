@@ -20,18 +20,22 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
 }
 ---
 
-<nav class="toc" aria-label="Indice della Costituzione">
+<nav class="hidden lg:block sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto p-4 bg-gray-50 rounded-xl text-sm [data-theme='dark']:bg-gray-900" aria-label="Indice della Costituzione">
   <!-- Principî Fondamentali -->
-  <details class="toc-section" open>
-    <summary class="toc-section-title">
-      <a href="/principi-fondamentali">{principiFondamentali.nome}</a>
+  <details class="mb-4 group" open>
+    <summary class="flex items-center p-2 font-semibold text-gray-900 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-100 [data-theme='dark']:hover:bg-gray-800">
+      <span class="mr-2 text-xs text-gray-400 transition-transform group-open:rotate-90">▶</span>
+      <a href="/principi-fondamentali" class="text-inherit no-underline hover:text-primary">{principiFondamentali.nome}</a>
     </summary>
-    <ul class="toc-list">
+    <ul class="list-none p-0 mt-2 ml-4">
       {principiFondamentali.articoli.map((num) => (
-        <li class="toc-item">
+        <li class="mb-1">
           <a 
             href={`/articolo/${num}`} 
-            class:list={['toc-link', { active: isCurrentArticle(num, 'articolo') }]}
+            class:list={[
+              'block px-2 py-1 rounded text-gray-500 no-underline transition-colors hover:text-primary hover:bg-primary-bg [data-theme="dark"]:text-gray-400',
+              { 'text-primary bg-primary-bg font-medium': isCurrentArticle(num, 'articolo') }
+            ]}
           >
             Art. {num}
           </a>
@@ -41,22 +45,27 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
   </details>
 
   <!-- Parte I -->
-  <details class="toc-section" open>
-    <summary class="toc-section-title">
-      <a href="/parte/1">Parte I</a>
+  <details class="mb-4 group" open>
+    <summary class="flex items-center p-2 font-semibold text-gray-900 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-100 [data-theme='dark']:hover:bg-gray-800">
+      <span class="mr-2 text-xs text-gray-400 transition-transform group-open:rotate-90">▶</span>
+      <a href="/parte/1" class="text-inherit no-underline hover:text-primary">Parte I</a>
     </summary>
-    <div class="toc-nested">
+    <div class="pl-4 mt-2">
       {parti[0].titoli.map((titolo) => (
-        <details class="toc-subsection">
-          <summary class="toc-subsection-title">
+        <details class="mb-2 group/sub">
+          <summary class="flex items-center px-2 py-1 font-medium text-gray-600 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-300 [data-theme='dark']:hover:bg-gray-800">
+            <span class="mr-2 text-[0.6em] text-gray-400 transition-transform group-open/sub:rotate-90">▶</span>
             Titolo {titolo.numero} - {titolo.nome}
           </summary>
-          <ul class="toc-list">
+          <ul class="list-none p-0 mt-2 ml-4">
             {titolo.articoli.map((num) => (
-              <li class="toc-item">
+              <li class="mb-1">
                 <a 
                   href={`/articolo/${num}`} 
-                  class:list={['toc-link', { active: isCurrentArticle(num, 'articolo') }]}
+                  class:list={[
+                    'block px-2 py-1 rounded text-gray-500 no-underline transition-colors hover:text-primary hover:bg-primary-bg [data-theme="dark"]:text-gray-400',
+                    { 'text-primary bg-primary-bg font-medium': isCurrentArticle(num, 'articolo') }
+                  ]}
                 >
                   Art. {num}
                 </a>
@@ -69,29 +78,35 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
   </details>
 
   <!-- Parte II -->
-  <details class="toc-section">
-    <summary class="toc-section-title">
-      <a href="/parte/2">Parte II</a>
+  <details class="mb-4 group">
+    <summary class="flex items-center p-2 font-semibold text-gray-900 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-100 [data-theme='dark']:hover:bg-gray-800">
+      <span class="mr-2 text-xs text-gray-400 transition-transform group-open:rotate-90">▶</span>
+      <a href="/parte/2" class="text-inherit no-underline hover:text-primary">Parte II</a>
     </summary>
-    <div class="toc-nested">
+    <div class="pl-4 mt-2">
       {parti[1].titoli.map((titolo) => (
-        <details class="toc-subsection">
-          <summary class="toc-subsection-title">
+        <details class="mb-2 group/sub">
+          <summary class="flex items-center px-2 py-1 font-medium text-gray-600 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-300 [data-theme='dark']:hover:bg-gray-800">
+            <span class="mr-2 text-[0.6em] text-gray-400 transition-transform group-open/sub:rotate-90">▶</span>
             Titolo {titolo.numero} - {titolo.nome}
           </summary>
           {titolo.sezioni ? (
-            <div class="toc-nested">
+            <div class="pl-4 mt-2">
               {titolo.sezioni.map((sezione) => (
-                <details class="toc-subsubsection">
-                  <summary class="toc-subsubsection-title">
+                <details class="mb-2 group/subsub">
+                  <summary class="flex items-center px-2 py-1 text-xs text-gray-500 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-400 [data-theme='dark']:hover:bg-gray-800">
+                    <span class="mr-2 text-[0.6em] text-gray-400 transition-transform group-open/subsub:rotate-90">▶</span>
                     {sezione.nome}
                   </summary>
-                  <ul class="toc-list">
+                  <ul class="list-none p-0 mt-2 ml-4">
                     {sezione.articoli.map((num) => (
-                      <li class="toc-item">
+                      <li class="mb-1">
                         <a 
                           href={`/articolo/${num}`} 
-                          class:list={['toc-link', { active: isCurrentArticle(num, 'articolo') }]}
+                          class:list={[
+                            'block px-2 py-1 rounded text-gray-500 no-underline transition-colors hover:text-primary hover:bg-primary-bg [data-theme="dark"]:text-gray-400',
+                            { 'text-primary bg-primary-bg font-medium': isCurrentArticle(num, 'articolo') }
+                          ]}
                         >
                           Art. {num}
                         </a>
@@ -102,12 +117,15 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
               ))}
             </div>
           ) : (
-            <ul class="toc-list">
+            <ul class="list-none p-0 mt-2 ml-4">
               {titolo.articoli.map((num) => (
-                <li class="toc-item">
+                <li class="mb-1">
                   <a 
                     href={`/articolo/${num}`} 
-                    class:list={['toc-link', { active: isCurrentArticle(num, 'articolo') }]}
+                    class:list={[
+                      'block px-2 py-1 rounded text-gray-500 no-underline transition-colors hover:text-primary hover:bg-primary-bg [data-theme="dark"]:text-gray-400',
+                      { 'text-primary bg-primary-bg font-medium': isCurrentArticle(num, 'articolo') }
+                    ]}
                   >
                     Art. {num}
                   </a>
@@ -121,16 +139,20 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
   </details>
 
   <!-- Disposizioni Transitorie -->
-  <details class="toc-section">
-    <summary class="toc-section-title">
-      <a href="/disposizioni-transitorie">Disposizioni</a>
+  <details class="mb-4 group">
+    <summary class="flex items-center p-2 font-semibold text-gray-900 cursor-pointer list-none rounded hover:bg-gray-200 [data-theme='dark']:text-gray-100 [data-theme='dark']:hover:bg-gray-800">
+      <span class="mr-2 text-xs text-gray-400 transition-transform group-open:rotate-90">▶</span>
+      <a href="/disposizioni-transitorie" class="text-inherit no-underline hover:text-primary">Disposizioni</a>
     </summary>
-    <ul class="toc-list">
+    <ul class="list-none p-0 mt-2 ml-4">
       {disposizioniTransitorie.disposizioni.map((num) => (
-        <li class="toc-item">
+        <li class="mb-1">
           <a 
             href={`/disposizione/${num.toLowerCase()}`} 
-            class:list={['toc-link', { active: isCurrentArticle(num, 'disposizione') }]}
+            class:list={[
+              'block px-2 py-1 rounded text-gray-500 no-underline transition-colors hover:text-primary hover:bg-primary-bg [data-theme="dark"]:text-gray-400',
+              { 'text-primary bg-primary-bg font-medium': isCurrentArticle(num, 'disposizione') }
+            ]}
           >
             {num}
           </a>
@@ -139,152 +161,3 @@ function isCurrentArticle(numero: number | string, tipo: 'articolo' | 'disposizi
     </ul>
   </details>
 </nav>
-
-<style>
-  .toc {
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-4));
-    max-height: calc(100vh - var(--header-height) - var(--space-8));
-    overflow-y: auto;
-    padding: var(--space-4);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    font-size: var(--text-sm);
-  }
-
-  .toc-section {
-    margin-bottom: var(--space-4);
-  }
-
-  .toc-section-title {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    cursor: pointer;
-    list-style: none;
-    padding: var(--space-2);
-    border-radius: var(--radius-sm);
-  }
-
-  .toc-section-title:hover {
-    background-color: var(--color-bg-tertiary);
-  }
-
-  .toc-section-title::marker,
-  .toc-section-title::-webkit-details-marker {
-    display: none;
-  }
-
-  .toc-section-title::before {
-    content: '▶';
-    display: inline-block;
-    margin-right: var(--space-2);
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    transition: transform var(--transition-fast);
-  }
-
-  details[open] > .toc-section-title::before {
-    transform: rotate(90deg);
-  }
-
-  .toc-section-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .toc-section-title a:hover {
-    color: var(--color-primary);
-  }
-
-  .toc-nested {
-    padding-left: var(--space-4);
-    margin-top: var(--space-2);
-  }
-
-  .toc-subsection,
-  .toc-subsubsection {
-    margin-bottom: var(--space-2);
-  }
-
-  .toc-subsection-title,
-  .toc-subsubsection-title {
-    display: flex;
-    align-items: center;
-    padding: var(--space-1) var(--space-2);
-    font-weight: 500;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    list-style: none;
-    border-radius: var(--radius-sm);
-  }
-
-  .toc-subsection-title:hover,
-  .toc-subsubsection-title:hover {
-    background-color: var(--color-bg-tertiary);
-  }
-
-  .toc-subsection-title::marker,
-  .toc-subsection-title::-webkit-details-marker,
-  .toc-subsubsection-title::marker,
-  .toc-subsubsection-title::-webkit-details-marker {
-    display: none;
-  }
-
-  .toc-subsection-title::before,
-  .toc-subsubsection-title::before {
-    content: '▶';
-    display: inline-block;
-    margin-right: var(--space-2);
-    font-size: 0.6em;
-    color: var(--color-text-muted);
-    transition: transform var(--transition-fast);
-  }
-
-  details[open] > .toc-subsection-title::before,
-  details[open] > .toc-subsubsection-title::before {
-    transform: rotate(90deg);
-  }
-
-  .toc-subsubsection-title {
-    font-size: var(--text-xs);
-    font-weight: 400;
-  }
-
-  .toc-list {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-2) 0 0 var(--space-4);
-  }
-
-  .toc-item {
-    margin-bottom: var(--space-1);
-  }
-
-  .toc-link {
-    display: block;
-    padding: var(--space-1) var(--space-2);
-    color: var(--color-text-muted);
-    text-decoration: none;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-  }
-
-  .toc-link:hover {
-    color: var(--color-primary);
-    background-color: var(--color-primary-bg);
-  }
-
-  .toc-link.active {
-    color: var(--color-primary);
-    background-color: var(--color-primary-bg);
-    font-weight: 500;
-  }
-
-  @media (max-width: 1024px) {
-    .toc {
-      display: none;
-    }
-  }
-</style>
