@@ -6,34 +6,36 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
 ---
 
 <Layout>
-  <main class="homepage">
-    <div class="container">
+  <main class="py-8">
+    <div class="max-w-6xl mx-auto px-4">
       <!-- Hero Section -->
-      <header class="hero">
-        <h1>Costituzione della Repubblica Italiana</h1>
-        <p class="hero-subtitle">
+      <header class="text-center py-12 border-b border-gray-200 mb-12 [data-theme='dark']:border-gray-800">
+        <h1 class="text-4xl md:text-5xl font-serif font-semibold text-primary mb-4">
+          Costituzione della Repubblica Italiana
+        </h1>
+        <p class="text-lg text-gray-600 mb-8 [data-theme='dark']:text-gray-400">
           Promulgata il 27 dicembre 1947<br>
           Entrata in vigore il 1° gennaio 1948
         </p>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">139</span>
-            <span class="stat-label">Articoli</span>
+        <div class="flex justify-center gap-12">
+          <div class="flex flex-col items-center">
+            <span class="font-serif text-3xl font-bold text-primary">139</span>
+            <span class="text-sm text-gray-500">Articoli</span>
           </div>
-          <div class="stat">
-            <span class="stat-number">XVIII</span>
-            <span class="stat-label">Disposizioni Transitorie</span>
+          <div class="flex flex-col items-center">
+            <span class="font-serif text-3xl font-bold text-primary">XVIII</span>
+            <span class="text-sm text-gray-500">Disposizioni Transitorie</span>
           </div>
         </div>
       </header>
 
       <!-- Quick Navigation -->
-      <nav class="quick-nav">
-        <a href="/articolo/1" class="quick-nav-item">
-          <span class="quick-nav-icon">1</span>
+      <nav class="flex justify-center gap-4 mb-12 flex-wrap">
+        <a href="/articolo/1" class="flex items-center gap-2 px-6 py-3 bg-gray-100 border border-gray-200 rounded-lg font-medium text-gray-900 transition-colors hover:bg-primary-bg hover:border-primary hover:text-primary no-underline [data-theme='dark']:bg-gray-800 [data-theme='dark']:border-gray-700 [data-theme='dark']:text-gray-100">
+          <span class="flex items-center justify-center w-6 h-6 bg-primary text-white text-xs font-bold rounded">1</span>
           <span>Vai all'Art. 1</span>
         </a>
-        <a href="/testo-completo" class="quick-nav-item">
+        <a href="/testo-completo" class="flex items-center gap-2 px-6 py-3 bg-gray-100 border border-gray-200 rounded-lg font-medium text-gray-900 transition-colors hover:bg-primary-bg hover:border-primary hover:text-primary no-underline [data-theme='dark']:bg-gray-800 [data-theme='dark']:border-gray-700 [data-theme='dark']:text-gray-100">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14,2 14,8 20,8"/>
@@ -45,16 +47,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
       </nav>
 
       <!-- Structure Overview -->
-      <section class="structure-overview">
+      <section class="grid gap-10 mb-12">
         <!-- Principî Fondamentali -->
-        <div class="structure-section">
-          <h2>
-            <a href="/principi-fondamentali">{principiFondamentali.nome}</a>
+        <div class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
+          <h2 class="mb-2 font-serif text-2xl">
+            <a href="/principi-fondamentali" class="text-gray-900 no-underline hover:text-primary [data-theme='dark']:text-gray-100">{principiFondamentali.nome}</a>
           </h2>
-          <p class="section-meta">Articoli 1 - 12</p>
-          <div class="article-grid">
+          <p class="text-sm text-gray-500 mb-4">Articoli 1 - 12</p>
+          <div class="flex flex-wrap gap-2">
             {principiFondamentali.articoli.map((num) => (
-              <a href={`/articolo/${num}`} class="article-link">
+              <a href={`/articolo/${num}`} class="px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme='dark']:bg-gray-800 [data-theme='dark']:border-gray-700 [data-theme='dark']:text-gray-300">
                 Art. {num}
               </a>
             ))}
@@ -62,16 +64,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Parte I -->
-        <div class="structure-section">
-          <h2>
-            <a href="/parte/1">Parte I - {parti[0].nome}</a>
+        <div class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
+          <h2 class="mb-2 font-serif text-2xl">
+            <a href="/parte/1" class="text-gray-900 no-underline hover:text-primary [data-theme='dark']:text-gray-100">Parte I - {parti[0].nome}</a>
           </h2>
-          <p class="section-meta">Articoli 13 - 54</p>
-          <div class="titoli-list">
+          <p class="text-sm text-gray-500 mb-4">Articoli 13 - 54</p>
+          <div class="grid gap-4">
             {parti[0].titoli.map((titolo) => (
-              <div class="titolo-item">
-                <h3>Titolo {titolo.numero} - {titolo.nome}</h3>
-                <p class="titolo-articles">
+              <div class="p-4 bg-white rounded-lg [data-theme='dark']:bg-gray-800">
+                <h3 class="text-base font-semibold mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+                <p class="text-sm text-gray-500 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
               </div>
@@ -80,16 +82,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Parte II -->
-        <div class="structure-section">
-          <h2>
-            <a href="/parte/2">Parte II - {parti[1].nome}</a>
+        <div class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
+          <h2 class="mb-2 font-serif text-2xl">
+            <a href="/parte/2" class="text-gray-900 no-underline hover:text-primary [data-theme='dark']:text-gray-100">Parte II - {parti[1].nome}</a>
           </h2>
-          <p class="section-meta">Articoli 55 - 139</p>
-          <div class="titoli-list">
+          <p class="text-sm text-gray-500 mb-4">Articoli 55 - 139</p>
+          <div class="grid gap-4">
             {parti[1].titoli.map((titolo) => (
-              <div class="titolo-item">
-                <h3>Titolo {titolo.numero} - {titolo.nome}</h3>
-                <p class="titolo-articles">
+              <div class="p-4 bg-white rounded-lg [data-theme='dark']:bg-gray-800">
+                <h3 class="text-base font-semibold mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+                <p class="text-sm text-gray-500 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
               </div>
@@ -98,14 +100,14 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Disposizioni Transitorie -->
-        <div class="structure-section">
-          <h2>
-            <a href="/disposizioni-transitorie">{disposizioniTransitorie.nome}</a>
+        <div class="p-6 bg-gray-50 rounded-xl [data-theme='dark']:bg-gray-900">
+          <h2 class="mb-2 font-serif text-2xl">
+            <a href="/disposizioni-transitorie" class="text-gray-900 no-underline hover:text-primary [data-theme='dark']:text-gray-100">{disposizioniTransitorie.nome}</a>
           </h2>
-          <p class="section-meta">Disposizioni I - XVIII</p>
-          <div class="article-grid">
+          <p class="text-sm text-gray-500 mb-4">Disposizioni I - XVIII</p>
+          <div class="flex flex-wrap gap-2">
             {disposizioniTransitorie.disposizioni.map((num) => (
-              <a href={`/disposizione/${num.toLowerCase()}`} class="article-link">
+              <a href={`/disposizione/${num.toLowerCase()}`} class="px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary [data-theme='dark']:bg-gray-800 [data-theme='dark']:border-gray-700 [data-theme='dark']:text-gray-300">
                 {num}
               </a>
             ))}
@@ -114,233 +116,19 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
       </section>
 
       <!-- Preamble -->
-      <section class="preamble">
-        <h2>Preambolo</h2>
-        <blockquote>
-          <p><strong>IL CAPO PROVVISORIO DELLO STATO</strong></p>
-          <p>
+      <section class="max-w-3xl mx-auto pt-8 border-t border-gray-200 [data-theme='dark']:border-gray-800">
+        <h2 class="text-center font-serif text-2xl mb-6">Preambolo</h2>
+        <blockquote class="m-0 p-6 bg-gray-50 rounded-lg border-l-4 border-primary font-serif text-lg leading-relaxed text-gray-600 [data-theme='dark']:bg-gray-900 [data-theme='dark']:text-gray-400">
+          <p class="mb-4"><strong>IL CAPO PROVVISORIO DELLO STATO</strong></p>
+          <p class="mb-4">
             Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
             del 22 dicembre 1947 ha approvato la Costituzione della Repubblica Italiana;
           </p>
-          <p>Vista la XVIII disposizione finale della Costituzione;</p>
-          <p><strong>PROMULGA</strong></p>
-          <p>la Costituzione della Repubblica Italiana nel seguente testo:</p>
+          <p class="mb-4">Vista la XVIII disposizione finale della Costituzione;</p>
+          <p class="mb-4"><strong>PROMULGA</strong></p>
+          <p class="m-0">la Costituzione della Repubblica Italiana nel seguente testo:</p>
         </blockquote>
       </section>
     </div>
   </main>
 </Layout>
-
-<style>
-  .homepage {
-    padding: var(--space-8) 0;
-  }
-
-  .hero {
-    text-align: center;
-    padding: var(--space-12) 0;
-    border-bottom: 1px solid var(--color-border-light);
-    margin-bottom: var(--space-12);
-  }
-
-  .hero h1 {
-    font-size: var(--text-4xl);
-    margin-bottom: var(--space-4);
-    color: var(--color-primary);
-  }
-
-  .hero-subtitle {
-    font-size: var(--text-lg);
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-8);
-  }
-
-  .hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-12);
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat-number {
-    font-family: var(--font-serif);
-    font-size: var(--text-3xl);
-    font-weight: 700;
-    color: var(--color-primary);
-  }
-
-  .stat-label {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-
-  .quick-nav {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-4);
-    margin-bottom: var(--space-12);
-  }
-
-  .quick-nav-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-6);
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    color: var(--color-text-primary);
-    font-weight: 500;
-    transition: all var(--transition-fast);
-  }
-
-  .quick-nav-item:hover {
-    background-color: var(--color-primary-bg);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .quick-nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: var(--radius-sm);
-    font-size: var(--text-xs);
-    font-weight: 700;
-  }
-
-  .structure-overview {
-    display: grid;
-    gap: var(--space-10);
-    margin-bottom: var(--space-12);
-  }
-
-  .structure-section {
-    padding: var(--space-6);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-  }
-
-  .structure-section h2 {
-    margin-bottom: var(--space-2);
-  }
-
-  .structure-section h2 a {
-    color: var(--color-text-primary);
-  }
-
-  .structure-section h2 a:hover {
-    color: var(--color-primary);
-  }
-
-  .section-meta {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-4);
-  }
-
-  .article-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .article-link {
-    padding: var(--space-2) var(--space-3);
-    background-color: var(--color-bg-primary);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
-  }
-
-  .article-link:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .titoli-list {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  .titolo-item {
-    padding: var(--space-4);
-    background-color: var(--color-bg-primary);
-    border-radius: var(--radius-md);
-  }
-
-  .titolo-item h3 {
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    font-weight: 600;
-    margin-bottom: var(--space-1);
-  }
-
-  .titolo-articles {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-
-  .preamble {
-    max-width: var(--max-width-content);
-    margin: 0 auto;
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-border-light);
-  }
-
-  .preamble h2 {
-    text-align: center;
-    margin-bottom: var(--space-6);
-  }
-
-  .preamble blockquote {
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    line-height: var(--leading-relaxed);
-    color: var(--color-text-secondary);
-    margin: 0;
-    padding: var(--space-6);
-    background-color: var(--color-bg-secondary);
-    border-radius: var(--radius-md);
-    border-left: 4px solid var(--color-primary);
-  }
-
-  .preamble blockquote p {
-    margin-bottom: var(--space-4);
-  }
-
-  .preamble blockquote p:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 768px) {
-    .hero-stats {
-      gap: var(--space-8);
-    }
-
-    .quick-nav {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .quick-nav-item {
-      width: 100%;
-      max-width: 20rem;
-      justify-content: center;
-    }
-  }
-</style>
