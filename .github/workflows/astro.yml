@@ -82,4 +82,4 @@ jobs:
           # strict or loose
           security: loose
           # Timeout in milliseconds for FTP operations
-          #timeout: # optional
+          timeout: 30000
