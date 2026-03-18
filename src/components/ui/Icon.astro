@@ -1,0 +1,98 @@
+---
+/**
+ * Icon Component
+ * 
+ * Reusable SVG icon component with consistent sizing and styling.
+ * All icons use currentColor for easy theming.
+ * 
+ * @example
+ * <Icon name="search" />
+ * <Icon name="menu" size={24} />
+ * <Icon name="sun" class="text-yellow-500" />
+ */
+
+type IconName = 
+  | 'logo'
+  | 'search'
+  | 'sun'
+  | 'moon'
+  | 'menu'
+  | 'close'
+  | 'document'
+  | 'print';
+
+interface Props {
+  /** Icon name */
+  name: IconName;
+  /** Size in pixels (width & height) */
+  size?: number;
+  /** Additional CSS classes */
+  class?: string;
+  /** Accessible label (adds aria-label, removes aria-hidden) */
+  label?: string;
+}
+
+const { name, size = 20, class: className, label } = Astro.props;
+
+const icons: Record<IconName, string> = {
+  logo: `
+    <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" opacity="0.2"/>
+    <path d="M4 10V19H8V14H16V19H20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M2 19H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M12 2L2 7H22L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  `,
+  search: `
+    <circle cx="11" cy="11" r="8"/>
+    <path d="m21 21-4.35-4.35"/>
+  `,
+  sun: `
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/>
+    <line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  `,
+  moon: `
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  `,
+  menu: `
+    <path d="M3 12h18M3 6h18M3 18h18"/>
+  `,
+  close: `
+    <path d="M18 6L6 18M6 6l12 12"/>
+  `,
+  document: `
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14,2 14,8 20,8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/>
+    <line x1="16" y1="17" x2="8" y2="17"/>
+  `,
+  print: `
+    <polyline points="6,9 6,2 18,2 18,9"/>
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+    <rect x="6" y="14" width="12" height="8"/>
+  `,
+};
+
+const iconContent = icons[name];
+const ariaHidden = !label;
+---
+
+<svg 
+  width={size} 
+  height={size} 
+  viewBox="0 0 24 24" 
+  fill="none" 
+  stroke="currentColor" 
+  stroke-width="2" 
+  stroke-linecap="round" 
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden={ariaHidden}
+  aria-label={label}
+  set:html={iconContent}
+/>
