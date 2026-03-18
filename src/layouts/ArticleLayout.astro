@@ -1,6 +1,6 @@
 ---
 import { getAdjacentArticles, getArticlePath, costituzioneStructure } from '../data/structure';
-import { Container, Breadcrumbs, Badge } from '../components/ui';
+import { Container, Breadcrumbs, Badge, NavLink } from '../components/ui';
 
 interface Props {
   numero: number | string;
@@ -41,6 +41,10 @@ if (tipo === 'disposizione') {
 }
 
 breadcrumbItems.push({ label: titolo });
+
+// Format navigation titles
+const formatNavTitle = (item: { numero: number | string; tipo: string }) => 
+  item.tipo === 'articolo' ? `Art. ${item.numero}` : `Disp. ${item.numero}`;
 ---
 
 <main class="py-8">
@@ -79,29 +83,22 @@ breadcrumbItems.push({ label: titolo });
       <!-- Article Navigation -->
       <nav class="flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700" aria-label="Navigazione articoli">
         {adjacent.prev ? (
-          <a 
+          <NavLink 
             href={getArticlePath(adjacent.prev.numero, adjacent.prev.tipo)} 
-            class="flex flex-col gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 no-underline"
-          >
-            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Precedente</span>
-            <span class="font-serif text-lg text-gray-900 dark:text-gray-100">
-              {adjacent.prev.tipo === 'articolo' ? `Art. ${adjacent.prev.numero}` : `Disp. ${adjacent.prev.numero}`}
-            </span>
-          </a>
+            label="Precedente"
+            title={formatNavTitle(adjacent.prev)}
+          />
         ) : (
           <div></div>
         )}
         
         {adjacent.next ? (
-          <a 
+          <NavLink 
             href={getArticlePath(adjacent.next.numero, adjacent.next.tipo)} 
-            class="flex flex-col items-end gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 no-underline"
-          >
-            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Successivo</span>
-            <span class="font-serif text-lg text-gray-900 dark:text-gray-100">
-              {adjacent.next.tipo === 'articolo' ? `Art. ${adjacent.next.numero}` : `Disp. ${adjacent.next.numero}`}
-            </span>
-          </a>
+            label="Successivo"
+            title={formatNavTitle(adjacent.next)}
+            align="end"
+          />
         ) : (
           <div></div>
         )}

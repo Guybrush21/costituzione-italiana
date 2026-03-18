@@ -1,0 +1,35 @@
+---
+/**
+ * NavLink Component
+ * 
+ * Navigation link for prev/next article navigation.
+ * 
+ * @example
+ * <NavLink href="/articolo/1" label="Precedente" title="Art. 1" />
+ * <NavLink href="/articolo/3" label="Successivo" title="Art. 3" align="end" />
+ */
+
+interface Props {
+  /** Link destination */
+  href: string;
+  /** Small label above the title */
+  label: string;
+  /** Main link text */
+  title: string;
+  /** Alignment: start (left) or end (right) */
+  align?: 'start' | 'end';
+}
+
+const { href, label, title, align = 'start' } = Astro.props;
+---
+
+<a 
+  href={href} 
+  class:list={[
+    'flex flex-col gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 no-underline',
+    align === 'end' && 'items-end'
+  ]}
+>
+  <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{label}</span>
+  <span class="font-serif text-lg text-gray-900 dark:text-gray-100">{title}</span>
+</a>

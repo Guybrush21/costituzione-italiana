@@ -6,7 +6,7 @@
  * Provides consistent header, breadcrumbs, and grid layout.
  */
 import Layout from './Layout.astro';
-import { Container, Breadcrumbs } from './ui';
+import { Container, Breadcrumbs, PageTitle, Text } from './ui';
 
 interface BreadcrumbItem {
   label: string;
@@ -33,10 +33,10 @@ const { title, description, metaDescription, breadcrumbs } = Astro.props;
         <div class="mb-4">
           <Breadcrumbs items={breadcrumbs} centered />
         </div>
-        <h1 class="font-serif text-4xl text-primary mb-4">{title}</h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+        <PageTitle>{title}</PageTitle>
+        <Text muted size="lg" class="max-w-xl mx-auto">
           {description}
-        </p>
+        </Text>
       </header>
 
       <div class="grid gap-4 max-w-3xl mx-auto">

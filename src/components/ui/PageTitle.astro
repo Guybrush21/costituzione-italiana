@@ -1,0 +1,28 @@
+---
+/**
+ * PageTitle Component
+ * 
+ * Main page title (h1) with consistent styling.
+ * Used for hero sections and page headers.
+ * 
+ * @example
+ * <PageTitle>Costituzione della Repubblica Italiana</PageTitle>
+ * <PageTitle subtitle="Testo completo">Costituzione</PageTitle>
+ */
+
+interface Props {
+  /** Subtitle displayed below the title */
+  subtitle?: string;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { subtitle, class: className } = Astro.props;
+---
+
+<h1 class:list={['text-4xl md:text-5xl font-serif font-semibold text-primary mb-4', className]}>
+  <slot />
+</h1>
+{subtitle && (
+  <p class="text-lg text-gray-500 dark:text-gray-400 mb-6">{subtitle}</p>
+)}

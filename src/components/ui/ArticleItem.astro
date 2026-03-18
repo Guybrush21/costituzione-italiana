@@ -1,0 +1,36 @@
+---
+/**
+ * ArticleItem Component
+ * 
+ * Single article display for full text view.
+ * Includes title, content, and abrogato state.
+ * 
+ * @example
+ * <ArticleItem title="Art. 1" abrogato={false}>
+ *   <Content />
+ * </ArticleItem>
+ */
+
+interface Props {
+  /** Article ID for anchor links */
+  id: string;
+  /** Article title (e.g., "Art. 1" or "I.") */
+  title: string;
+  /** Whether the article is abrogated */
+  abrogato?: boolean;
+}
+
+const { id, title, abrogato = false } = Astro.props;
+
+const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none';
+---
+
+<article 
+  class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': abrogato }]} 
+  id={id}
+>
+  <h3 class="text-base font-semibold text-primary mb-3">{title}</h3>
+  <div class:list={[proseClasses, { 'italic': abrogato }]}>
+    <slot />
+  </div>
+</article>

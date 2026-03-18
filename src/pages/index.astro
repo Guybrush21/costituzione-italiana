@@ -1,6 +1,6 @@
 ---
 import Layout from '../components/Layout.astro';
-import { Container, Card, Badge, LinkButton, Icon } from '../components/ui';
+import { Container, Card, Badge, LinkButton, Icon, PageTitle, Text } from '../components/ui';
 import { costituzioneStructure } from '../data/structure';
 
 const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStructure;
@@ -11,14 +11,12 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
     <Container>
       <!-- Hero Section -->
       <header class="text-center py-12 border-b border-gray-200 dark:border-gray-700 mb-12">
-        <h1 class="text-4xl md:text-5xl font-serif font-semibold text-primary mb-4">
-          Costituzione della Repubblica Italiana
-        </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        <PageTitle>Costituzione della Repubblica Italiana</PageTitle>
+        <Text muted size="lg" class="mb-8">
           Promulgata il 27 dicembre 1947<br>
           Entrata in vigore il 1° gennaio 1948<br/>
           Testo aggiornato alla legge costituzionale 26 settembre 2023, N. 1
-        </p>
+        </Text>
         <div class="flex justify-center gap-12">
           <div class="flex flex-col items-center">
             <span class="font-serif text-3xl font-bold text-primary">139</span>
@@ -52,7 +50,7 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
               {principiFondamentali.nome}
             </a>
           </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 1 - 12</p>
+          <Text muted noMargin class="mb-4">Articoli 1 - 12</Text>
           <div class="flex flex-wrap gap-2">
             {principiFondamentali.articoli.map((num) => (
               <Badge variant="outline" href={`/articolo/${num}`}>Art. {num}</Badge>
@@ -67,16 +65,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
               Parte I - {parti[0].nome}
             </a>
           </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 13 - 54</p>
+          <Text muted noMargin class="mb-4">Articoli 13 - 54</Text>
           <div class="grid gap-4">
             {parti[0].titoli.map((titolo) => (
               <Card variant="inner">
                 <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   Titolo {titolo.numero} - {titolo.nome}
                 </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
+                <Text muted noMargin>
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                </p>
+                </Text>
               </Card>
             ))}
           </div>
@@ -89,16 +87,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
               Parte II - {parti[1].nome}
             </a>
           </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 55 - 139</p>
+          <Text muted noMargin class="mb-4">Articoli 55 - 139</Text>
           <div class="grid gap-4">
             {parti[1].titoli.map((titolo) => (
               <Card variant="inner">
                 <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   Titolo {titolo.numero} - {titolo.nome}
                 </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
+                <Text muted noMargin>
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                </p>
+                </Text>
               </Card>
             ))}
           </div>
@@ -111,7 +109,7 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
               {disposizioniTransitorie.nome}
             </a>
           </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Disposizioni I - XVIII</p>
+          <Text muted noMargin class="mb-4">Disposizioni I - XVIII</Text>
           <div class="flex flex-wrap gap-2">
             {disposizioniTransitorie.disposizioni.map((num) => (
               <Badge variant="outline" href={`/disposizione/${num.toLowerCase()}`}>{num}</Badge>

@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../components/Layout.astro';
-import { Container, Card, Icon } from '../components/ui';
+import { Container, Card, Icon, PageTitle, SectionTitle, ArticleItem } from '../components/ui';
 import { costituzioneStructure, sortArticlesByNumber } from '../data/structure';
 
 // Get all articles and dispositions
@@ -58,9 +58,6 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
     );
   }
 }
-
-// Shared prose classes for article content
-const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none';
 ---
 
 <Layout 
@@ -70,8 +67,7 @@ const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p
   <main class="py-8">
     <Container>
       <header class="text-center mb-12 pb-8 border-b-2 border-primary">
-        <h1 class="text-4xl font-serif text-primary mb-2">Costituzione della Repubblica Italiana</h1>
-        <p class="text-lg text-gray-500 dark:text-gray-400 mb-6">Testo completo</p>
+        <PageTitle subtitle="Testo completo">Costituzione della Repubblica Italiana</PageTitle>
         <button 
           class="no-print inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors" 
           onclick="window.print()"
@@ -95,43 +91,27 @@ const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p
 
       <!-- Principi Fondamentali -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="principi-fondamentali" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 dark:border-gray-700">
-          Principi Fondamentali
-        </h2>
+        <SectionTitle id="principi-fondamentali" centered>Principi Fondamentali</SectionTitle>
         {principiFondamentali.map(({ data, rendered }) => (
-          <article 
-            class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': data.abrogato }]} 
-            id={`art-${data.numero}`}
-          >
-            <h3 class="text-base font-semibold text-primary mb-3">{data.titolo}</h3>
-            <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
-              <rendered.Content />
-            </div>
-          </article>
+          <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
+            <rendered.Content />
+          </ArticleItem>
         ))}
       </section>
 
       <!-- Parte I -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="parte-1" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 dark:border-gray-700">
-          Parte I - Diritti e Doveri dei Cittadini
-        </h2>
+        <SectionTitle id="parte-1" centered>Parte I - Diritti e Doveri dei Cittadini</SectionTitle>
         
         {costituzioneStructure.parti[0].titoli.map((titolo) => (
           <div class="mb-10">
-            <h3 id={`titolo-1-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif text-gray-900 dark:text-gray-100 mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
+            <SectionTitle level={3} id={`titolo-1-${titolo.numero.toLowerCase()}`} class="text-gray-900 dark:text-gray-100">
               Titolo {titolo.numero} - {titolo.nome}
-            </h3>
+            </SectionTitle>
             {parteIByTitolo.get(titolo.numero)?.map(({ data, rendered }) => (
-              <article 
-                class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': data.abrogato }]} 
-                id={`art-${data.numero}`}
-              >
-                <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
-                  <rendered.Content />
-                </div>
-              </article>
+              <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
+                <rendered.Content />
+              </ArticleItem>
             ))}
           </div>
         ))}
@@ -139,46 +119,32 @@ const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p
 
       <!-- Parte II -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="parte-2" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 dark:border-gray-700">
-          Parte II - Ordinamento della Repubblica
-        </h2>
+        <SectionTitle id="parte-2" centered>Parte II - Ordinamento della Repubblica</SectionTitle>
         
         {costituzioneStructure.parti[1].titoli.map((titolo) => (
           <div class="mb-10">
-            <h3 id={`titolo-2-${titolo.numero.toLowerCase()}`} class="text-2xl font-serif text-gray-900 dark:text-gray-100 mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
+            <SectionTitle level={3} id={`titolo-2-${titolo.numero.toLowerCase()}`} class="text-gray-900 dark:text-gray-100">
               Titolo {titolo.numero} - {titolo.nome}
-            </h3>
+            </SectionTitle>
             
             {titolo.sezioni ? (
               titolo.sezioni.map((sezione) => (
                 <div class="mb-8">
-                  <h4 class="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  <SectionTitle level={4} border={false}>
                     Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}
-                  </h4>
+                  </SectionTitle>
                   {parteIIBySezione.get(sezione.id)?.map(({ data, rendered }) => (
-                    <article 
-                      class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': data.abrogato }]} 
-                      id={`art-${data.numero}`}
-                    >
-                      <h5 class="text-base font-semibold text-primary mb-3">{data.titolo}</h5>
-                      <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
-                        <rendered.Content />
-                      </div>
-                    </article>
+                    <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
+                      <rendered.Content />
+                    </ArticleItem>
                   ))}
                 </div>
               ))
             ) : (
               parteIIByTitolo.get(titolo.numero)?.map(({ data, rendered }) => (
-                <article 
-                  class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': data.abrogato }]} 
-                  id={`art-${data.numero}`}
-                >
-                  <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                  <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
-                    <rendered.Content />
-                  </div>
-                </article>
+                <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
+                  <rendered.Content />
+                </ArticleItem>
               ))
             )}
           </div>
@@ -187,19 +153,11 @@ const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p
 
       <!-- Disposizioni Transitorie -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <h2 id="disposizioni-transitorie" class="text-3xl font-serif text-primary text-center mb-8 pb-4 border-b border-gray-300 dark:border-gray-700">
-          Disposizioni Transitorie e Finali
-        </h2>
+        <SectionTitle id="disposizioni-transitorie" centered>Disposizioni Transitorie e Finali</SectionTitle>
         {renderedDisposizioni.map(({ data, rendered }) => (
-          <article 
-            class:list={['mb-6 pb-6 border-b border-gray-200 dark:border-gray-700', { 'opacity-60': data.abrogato }]} 
-            id={`disp-${(data.numero as string).toLowerCase()}`}
-          >
-            <h3 class="text-base font-semibold text-primary mb-3">{data.numero}.</h3>
-            <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
-              <rendered.Content />
-            </div>
-          </article>
+          <ArticleItem id={`disp-${(data.numero as string).toLowerCase()}`} title={`${data.numero}.`} abrogato={data.abrogato}>
+            <rendered.Content />
+          </ArticleItem>
         ))}
       </section>
 
