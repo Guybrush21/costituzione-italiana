@@ -1,0 +1,40 @@
+---
+/**
+ * ArticleCard Component
+ * 
+ * Displays a card for an article or disposition with a link to its detail page.
+ */
+
+interface Props {
+  numero: number | string;
+  tipo: 'articolo' | 'disposizione';
+  descrizione: string;
+  abrogato?: boolean;
+}
+
+const { numero, tipo, descrizione, abrogato = false } = Astro.props;
+
+const href = tipo === 'disposizione' 
+  ? `/disposizione/${String(numero).toLowerCase()}`
+  : `/articolo/${numero}`;
+
+const label = tipo === 'articolo' ? `Art. ${numero}` : String(numero);
+---
+
+<a 
+  href={href} 
+  class:list={[
+    "block p-5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg dark:hover:bg-gray-700 no-underline",
+    { 'opacity-60': abrogato }
+  ]}
+>
+  <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
+    {label}
+    {abrogato && (
+      <span class="ml-2 text-xs px-1 bg-red-500 rounded">abrogato</span>
+    )}
+  </span>
+  <p class="m-0 text-gray-600 dark:text-gray-300 font-serif leading-relaxed">
+    {descrizione}
+  </p>
+</a>

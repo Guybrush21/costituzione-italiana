@@ -2,6 +2,9 @@
  * Search utilities for the Italian Constitution
  */
 
+// Re-export getArticlePath for backward compatibility
+export { getArticlePath as getSearchItemUrl } from '../data/structure';
+
 export interface SearchItem {
   numero: number | string;
   tipo: 'articolo' | 'disposizione';
@@ -12,11 +15,10 @@ export interface SearchItem {
 }
 
 /**
- * Generate the URL for an article or disposition
+ * Extend Window interface for search index
  */
-export function getSearchItemUrl(numero: number | string, tipo: 'articolo' | 'disposizione'): string {
-  if (tipo === 'disposizione') {
-    return `/disposizione/${String(numero).toLowerCase()}`;
+declare global {
+  interface Window {
+    __SEARCH_INDEX__: SearchItem[];
   }
-  return `/articolo/${numero}`;
 }

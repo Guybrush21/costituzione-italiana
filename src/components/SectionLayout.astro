@@ -1,0 +1,55 @@
+---
+/**
+ * SectionLayout Component
+ * 
+ * Shared layout for section pages (Principi Fondamentali, Parti, Disposizioni).
+ * Provides consistent header, breadcrumbs, and grid layout.
+ */
+import Layout from './Layout.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  metaDescription: string;
+  breadcrumbs: BreadcrumbItem[];
+}
+
+const { title, description, metaDescription, breadcrumbs } = Astro.props;
+---
+
+<Layout 
+  title={title} 
+  description={metaDescription}
+>
+  <main class="py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <header class="max-w-3xl mx-auto mb-10 text-center">
+        <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500 dark:text-gray-400">
+          {breadcrumbs.map((crumb, index) => (
+            <>
+              {index > 0 && <span class="text-gray-300 dark:text-gray-600">/</span>}
+              {crumb.href ? (
+                <a href={crumb.href} class="text-gray-600 dark:text-gray-300 hover:text-primary no-underline">{crumb.label}</a>
+              ) : (
+                <span class="text-gray-900 dark:text-gray-100">{crumb.label}</span>
+              )}
+            </>
+          ))}
+        </nav>
+        <h1 class="font-serif text-4xl text-primary mb-4">{title}</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+          {description}
+        </p>
+      </header>
+
+      <div class="grid gap-4 max-w-3xl mx-auto">
+        <slot />
+      </div>
+    </div>
+  </main>
+</Layout>

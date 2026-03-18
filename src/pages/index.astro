@@ -9,33 +9,34 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
   <main class="py-8">
     <div class="max-w-6xl mx-auto px-4">
       <!-- Hero Section -->
-      <header class="text-center py-12 border-b border-gray-200 mb-12">
+      <header class="text-center py-12 border-b border-gray-200 dark:border-gray-700 mb-12">
         <h1 class="text-4xl md:text-5xl font-serif font-semibold text-primary mb-4">
           Costituzione della Repubblica Italiana
         </h1>
-        <p class="text-lg text-gray-600 mb-8">
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
           Promulgata il 27 dicembre 1947<br>
-          Entrata in vigore il 1° gennaio 1948
+          Entrata in vigore il 1° gennaio 1948<br/>
+          Testo aggiornato alla legge costituzionale 26 settembre 2023, N. 1
         </p>
         <div class="flex justify-center gap-12">
           <div class="flex flex-col items-center">
             <span class="font-serif text-3xl font-bold text-primary">139</span>
-            <span class="text-sm text-gray-500">Articoli</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Articoli</span>
           </div>
           <div class="flex flex-col items-center">
             <span class="font-serif text-3xl font-bold text-primary">XVIII</span>
-            <span class="text-sm text-gray-500">Disposizioni Transitorie</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Disposizioni Transitorie</span>
           </div>
         </div>
       </header>
 
       <!-- Quick Navigation -->
       <nav class="flex justify-center gap-4 mb-12 flex-wrap">
-        <a href="/articolo/1" class="flex items-center gap-2 px-6 py-3 bg-gray-100 border border-gray-200 rounded-lg font-medium text-gray-900 transition-colors hover:bg-primary-bg hover:border-primary hover:text-primary no-underline">
+        <a href="/articolo/1" class="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg font-medium text-gray-900 dark:text-gray-100 transition-colors hover:bg-primary-bg dark:hover:bg-primary/20 hover:border-primary hover:text-primary no-underline">
           <span class="flex items-center justify-center w-6 h-6 bg-primary text-white text-xs font-bold rounded">1</span>
           <span>Vai all'Art. 1</span>
         </a>
-        <a href="/testo-completo" class="flex items-center gap-2 px-6 py-3 bg-gray-100 border border-gray-200 rounded-lg font-medium text-gray-900 transition-colors hover:bg-primary-bg hover:border-primary hover:text-primary no-underline">
+        <a href="/testo-completo" class="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg font-medium text-gray-900 dark:text-gray-100 transition-colors hover:bg-primary-bg dark:hover:bg-primary/20 hover:border-primary hover:text-primary no-underline">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14,2 14,8 20,8"/>
@@ -49,14 +50,14 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
       <!-- Structure Overview -->
       <section class="grid gap-10 mb-12">
         <!-- Principi Fondamentali -->
-        <div class="p-6 bg-gray-50 rounded-xl">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/principi-fondamentali" class="text-gray-900 no-underline hover:text-primary">{principiFondamentali.nome}</a>
+            <a href="/principi-fondamentali" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">{principiFondamentali.nome}</a>
           </h2>
-          <p class="text-sm text-gray-500 mb-4">Articoli 1 - 12</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 1 - 12</p>
           <div class="flex flex-wrap gap-2">
             {principiFondamentali.articoli.map((num) => (
-              <a href={`/articolo/${num}`} class="px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary">
+              <a href={`/articolo/${num}`} class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-sm text-gray-600 dark:text-gray-400 no-underline transition-colors hover:border-primary hover:text-primary">
                 Art. {num}
               </a>
             ))}
@@ -64,16 +65,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Parte I -->
-        <div class="p-6 bg-gray-50 rounded-xl">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/1" class="text-gray-900 no-underline hover:text-primary">Parte I - {parti[0].nome}</a>
+            <a href="/parte/1" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">Parte I - {parti[0].nome}</a>
           </h2>
-          <p class="text-sm text-gray-500 mb-4">Articoli 13 - 54</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 13 - 54</p>
           <div class="grid gap-4">
             {parti[0].titoli.map((titolo) => (
-              <div class="p-4 bg-white rounded-lg">
-                <h3 class="text-base font-semibold mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
-                <p class="text-sm text-gray-500 m-0">
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
               </div>
@@ -82,16 +83,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Parte II -->
-        <div class="p-6 bg-gray-50 rounded-xl">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/2" class="text-gray-900 no-underline hover:text-primary">Parte II - {parti[1].nome}</a>
+            <a href="/parte/2" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">Parte II - {parti[1].nome}</a>
           </h2>
-          <p class="text-sm text-gray-500 mb-4">Articoli 55 - 139</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 55 - 139</p>
           <div class="grid gap-4">
             {parti[1].titoli.map((titolo) => (
-              <div class="p-4 bg-white rounded-lg">
-                <h3 class="text-base font-semibold mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
-                <p class="text-sm text-gray-500 m-0">
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
               </div>
@@ -100,14 +101,14 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
 
         <!-- Disposizioni Transitorie -->
-        <div class="p-6 bg-gray-50 rounded-xl">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/disposizioni-transitorie" class="text-gray-900 no-underline hover:text-primary">{disposizioniTransitorie.nome}</a>
+            <a href="/disposizioni-transitorie" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">{disposizioniTransitorie.nome}</a>
           </h2>
-          <p class="text-sm text-gray-500 mb-4">Disposizioni I - XVIII</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Disposizioni I - XVIII</p>
           <div class="flex flex-wrap gap-2">
             {disposizioniTransitorie.disposizioni.map((num) => (
-              <a href={`/disposizione/${num.toLowerCase()}`} class="px-3 py-2 bg-white border border-gray-200 rounded text-sm text-gray-600 no-underline transition-colors hover:border-primary hover:text-primary">
+              <a href={`/disposizione/${num.toLowerCase()}`} class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-sm text-gray-600 dark:text-gray-400 no-underline transition-colors hover:border-primary hover:text-primary">
                 {num}
               </a>
             ))}
@@ -115,20 +116,6 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         </div>
       </section>
 
-      <!-- Preamble -->
-      <section class="max-w-3xl mx-auto pt-8 border-t border-gray-200">
-        <h2 class="text-center font-serif text-2xl mb-6">Preambolo</h2>
-        <blockquote class="m-0 p-6 bg-gray-50 rounded-lg border-l-4 border-primary font-serif text-lg leading-relaxed text-gray-600">
-          <p class="mb-4"><strong>IL CAPO PROVVISORIO DELLO STATO</strong></p>
-          <p class="mb-4">
-            Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
-            del 22 dicembre 1947 ha approvato la Costituzione della Repubblica Italiana;
-          </p>
-          <p class="mb-4">Vista la XVIII disposizione finale della Costituzione;</p>
-          <p class="mb-4"><strong>PROMULGA</strong></p>
-          <p class="m-0">la Costituzione della Repubblica Italiana nel seguente testo:</p>
-        </blockquote>
-      </section>
     </div>
   </main>
 </Layout>

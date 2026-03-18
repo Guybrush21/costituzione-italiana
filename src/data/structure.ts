@@ -5,6 +5,40 @@
  * for navigation and display purposes.
  */
 
+/**
+ * Roman numeral order for sorting dispositions
+ */
+export const ROMAN_NUMERAL_ORDER = [
+  'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X',
+  'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII'
+] as const;
+
+/**
+ * Sort articles by numeric order
+ */
+export function sortArticlesByNumber<T extends { data: { numero: number | string } }>(
+  articles: T[]
+): T[] {
+  return [...articles].sort((a, b) => {
+    const numA = a.data.numero;
+    const numB = b.data.numero;
+    
+    // Both are numbers
+    if (typeof numA === 'number' && typeof numB === 'number') {
+      return numA - numB;
+    }
+    
+    // Both are roman numerals (dispositions)
+    if (typeof numA === 'string' && typeof numB === 'string') {
+      return ROMAN_NUMERAL_ORDER.indexOf(numA as typeof ROMAN_NUMERAL_ORDER[number]) - 
+             ROMAN_NUMERAL_ORDER.indexOf(numB as typeof ROMAN_NUMERAL_ORDER[number]);
+    }
+    
+    // Numbers come before strings
+    return typeof numA === 'number' ? -1 : 1;
+  });
+}
+
 export interface Sezione {
   id: string;
   nome: string;
@@ -223,6 +257,12 @@ export function getAdjacentArticles(currentNumber: number | string): {
   // If it's a disposition
   if (typeof currentNumber === 'string') {
     const idx = disposizioni.indexOf(currentNumber);
+    
+    // Handle case where disposition is not found
+    if (idx === -1) {
+      return { prev: null, next: null };
+    }
+    
     return {
       prev: idx === 0 
         ? { numero: 139, tipo: 'articolo' }

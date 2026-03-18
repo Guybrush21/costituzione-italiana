@@ -1,47 +1,33 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../components/Layout.astro';
-import { costituzioneStructure } from '../data/structure';
+import SectionLayout from '../components/SectionLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { sortArticlesByNumber } from '../data/structure';
 
-const articoli = await getCollection('articoli', ({ data }) => 
+const articoliRaw = await getCollection('articoli', ({ data }) => 
   data.tipo === 'articolo' && data.sezione === 'principi-fondamentali'
 );
 
-// Sort by article number
-articoli.sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
+const articoli = sortArticlesByNumber(articoliRaw);
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Principi Fondamentali' },
+];
 ---
 
-<Layout 
-  title="Principi Fondamentali" 
-  description="I principi fondamentali della Costituzione Italiana, articoli 1-12."
+<SectionLayout 
+  title="Principi Fondamentali"
+  description="I dodici articoli che costituiscono i principi fondamentali della Costituzione Italiana definiscono i valori su cui si fonda la Repubblica."
+  metaDescription="I principi fondamentali della Costituzione Italiana, articoli 1-12."
+  breadcrumbs={breadcrumbs}
 >
-  <main class="py-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <header class="max-w-3xl mx-auto mb-10 text-center">
-        <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
-          <a href="/" class="text-gray-600 hover:text-primary no-underline">Home</a>
-          <span class="text-gray-300">/</span>
-          <span class="text-gray-900">Principi Fondamentali</span>
-        </nav>
-        <h1 class="font-serif text-4xl text-primary mb-4">Principi Fondamentali</h1>
-        <p class="text-lg text-gray-600 max-w-xl mx-auto">
-          I dodici articoli che costituiscono i principi fondamentali della 
-          Costituzione Italiana definiscono i valori su cui si fonda la Repubblica.
-        </p>
-      </header>
-
-      <div class="grid gap-4 max-w-3xl mx-auto">
-        {articoli.map((articolo) => (
-          <a href={`/articolo/${articolo.data.numero}`} class="block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline">
-            <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
-              Art. {articolo.data.numero}
-            </span>
-            <p class="m-0 text-gray-600 font-serif leading-relaxed">
-              {articolo.data.descrizione}
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </main>
-</Layout>
+  {articoli.map((articolo) => (
+    <ArticleCard
+      numero={articolo.data.numero}
+      tipo={articolo.data.tipo}
+      descrizione={articolo.data.descrizione}
+      abrogato={articolo.data.abrogato}
+    />
+  ))}
+</SectionLayout>

@@ -1,10 +1,14 @@
 ---
-// Header component with navigation and search
+/**
+ * Header Component
+ * 
+ * Sticky header with navigation, search trigger, mobile menu, and dark mode toggle.
+ */
 ---
 
-<header class="sticky top-0 z-50 h-16 bg-white/95 backdrop-blur border-b border-gray-200">
+<header class="sticky top-0 z-50 h-16 bg-white/95 dark:bg-gray-900/95 backdrop-blur border-b border-gray-200 dark:border-gray-700">
   <div class="flex items-center justify-between h-full max-w-6xl mx-auto px-4">
-    <a href="/" class="flex items-center gap-3 font-serif text-lg font-semibold text-gray-900 hover:text-primary no-underline">
+    <a href="/" class="flex items-center gap-3 font-serif text-lg font-semibold text-gray-900 dark:text-white hover:text-primary no-underline">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" opacity="0.2"/>
         <path d="M4 10V19H8V14H16V19H20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -15,16 +19,17 @@
     </a>
     
     <nav class="hidden md:flex items-center gap-6">
-      <a href="/principi-fondamentali" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Principi Fondamentali</a>
-      <a href="/parte/1" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Parte I</a>
-      <a href="/parte/2" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Parte II</a>
-      <a href="/disposizioni-transitorie" class="text-sm font-medium text-gray-600 hover:text-primary no-underline">Disposizioni</a>
+      <a href="/principi-fondamentali" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary no-underline">Principi Fondamentali</a>
+      <a href="/parte/1" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary no-underline">Parte I</a>
+      <a href="/parte/2" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary no-underline">Parte II</a>
+      <a href="/disposizioni-transitorie" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary no-underline">Disposizioni</a>
     </nav>
     
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <!-- Search button -->
       <button 
         type="button" 
-        class="flex items-center gap-2 px-3 py-2 bg-gray-100 border border-gray-200 rounded-lg text-gray-500 text-sm cursor-pointer transition-colors hover:border-gray-300 hover:bg-gray-200"
+        class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-500 dark:text-gray-400 text-sm cursor-pointer transition-colors hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700"
         id="search-trigger"
         aria-label="Cerca nella Costituzione"
       >
@@ -33,25 +38,154 @@
           <path d="m21 21-4.35-4.35"/>
         </svg>
         <span class="hidden sm:inline">Cerca...</span>
-        <kbd class="hidden sm:inline font-mono text-xs px-1.5 py-0.5 bg-gray-200 rounded">⌘K</kbd>
+        <kbd class="hidden sm:inline font-mono text-xs px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">⌘K</kbd>
+      </button>
+      
+      <!-- Dark mode toggle -->
+      <button 
+        type="button" 
+        class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        id="theme-toggle"
+        aria-label="Cambia tema"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
       </button>
       
       <!-- Mobile menu button -->
       <button 
         type="button" 
-        class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+        class="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
         id="mobile-menu-toggle"
         aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="menu-icon w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+        <svg class="close-icon hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
         </svg>
       </button>
     </div>
   </div>
+  
+  <!-- Mobile menu -->
+  <nav 
+    id="mobile-menu" 
+    class="md:hidden hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg"
+    aria-label="Menu di navigazione mobile"
+  >
+    <div class="flex flex-col p-4 space-y-2">
+      <a href="/principi-fondamentali" class="px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 no-underline font-medium">
+        Principi Fondamentali
+      </a>
+      <a href="/parte/1" class="px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 no-underline font-medium">
+        Parte I - Diritti e Doveri
+      </a>
+      <a href="/parte/2" class="px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 no-underline font-medium">
+        Parte II - Ordinamento
+      </a>
+      <a href="/disposizioni-transitorie" class="px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 no-underline font-medium">
+        Disposizioni Transitorie
+      </a>
+      <a href="/testo-completo" class="px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 no-underline font-medium">
+        Testo Completo
+      </a>
+    </div>
+  </nav>
 </header>
 
 <script>
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = mobileMenuToggle?.querySelector('.menu-icon');
+  const closeIcon = mobileMenuToggle?.querySelector('.close-icon');
+
+  function toggleMobileMenu() {
+    const isOpen = mobileMenu?.classList.contains('hidden') === false;
+    
+    if (isOpen) {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+    } else {
+      mobileMenu?.classList.remove('hidden');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      mobileMenuToggle?.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  mobileMenuToggle?.addEventListener('click', toggleMobileMenu);
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu?.contains(e.target as Node) && !mobileMenuToggle?.contains(e.target as Node)) {
+      if (!mobileMenu?.classList.contains('hidden')) {
+        toggleMobileMenu();
+      }
+    }
+  });
+
+  // Close mobile menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+      toggleMobileMenu();
+    }
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  
+  function getThemePreference(): 'dark' | 'light' {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme') as 'dark' | 'light';
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function setTheme(theme: 'dark' | 'light') {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }
+
+  // Initialize theme
+  setTheme(getThemePreference());
+
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
   // Search trigger - keyboard shortcut
   const searchTrigger = document.getElementById('search-trigger');
   

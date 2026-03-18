@@ -1,5 +1,5 @@
 ---
-import { getAdjacentArticles, getArticlePath, getArticleContext, costituzioneStructure } from '../data/structure';
+import { getAdjacentArticles, getArticlePath, costituzioneStructure } from '../data/structure';
 
 interface Props {
   numero: number | string;
@@ -46,14 +46,14 @@ breadcrumbs.push({ label: titolo });
   <div class="max-w-6xl mx-auto px-4">
     <div class="max-w-3xl mx-auto">
       <!-- Breadcrumb -->
-      <nav class="flex flex-wrap items-center gap-2 mb-6 text-sm text-gray-500" aria-label="Percorso">
+      <nav class="flex flex-wrap items-center gap-2 mb-6 text-sm text-gray-500 dark:text-gray-400" aria-label="Percorso">
         {breadcrumbs.map((crumb, index) => (
           <>
-            {index > 0 && <span class="text-gray-300" aria-hidden="true">/</span>}
+            {index > 0 && <span class="text-gray-300 dark:text-gray-600" aria-hidden="true">/</span>}
             {crumb.href ? (
-              <a href={crumb.href} class="text-gray-600 hover:text-primary no-underline">{crumb.label}</a>
+              <a href={crumb.href} class="text-gray-600 dark:text-gray-300 hover:text-primary no-underline">{crumb.label}</a>
             ) : (
-              <span aria-current="page" class="text-gray-900">{crumb.label}</span>
+              <span aria-current="page" class="text-gray-900 dark:text-gray-100">{crumb.label}</span>
             )}
           </>
         ))}
@@ -61,12 +61,12 @@ breadcrumbs.push({ label: titolo });
       
       <!-- Article Header -->
       <header class="mb-8">
-        <span class="inline-flex items-center justify-center min-w-12 px-3 py-1 text-sm font-bold text-primary bg-primary-bg rounded">
+        <span class="inline-flex items-center justify-center min-w-12 px-3 py-1 text-sm font-bold text-primary bg-primary-bg dark:bg-gray-800 rounded">
           {tipo === 'articolo' ? `Art. ${numero}` : numero}
         </span>
-        <h1 class="mt-4 mb-2 font-serif text-4xl font-semibold text-gray-900">{titolo}</h1>
+        <h1 class="mt-4 mb-2 font-serif text-4xl font-semibold text-gray-900 dark:text-gray-100">{titolo}</h1>
         {abrogato && (
-          <p class="inline-block px-3 py-1 text-sm font-medium text-red-600 bg-red-50 rounded">
+          <p class="inline-block px-3 py-1 text-sm font-medium text-red-600 bg-red-50 dark:bg-red-900/30 rounded">
             Articolo abrogato
           </p>
         )}
@@ -74,8 +74,8 @@ breadcrumbs.push({ label: titolo });
       
       <!-- Article Content -->
       <article class:list={[
-        'font-serif text-lg leading-relaxed',
-        'prose prose-lg max-w-none',
+        'font-serif text-lg leading-relaxed text-gray-900 dark:text-gray-100',
+        'prose prose-lg max-w-none dark:prose-invert',
         'prose-p:mb-6 prose-p:text-justify prose-p:hyphens-auto',
         'prose-ul:my-4 prose-ul:pl-8',
         'prose-li:mb-2',
@@ -85,14 +85,14 @@ breadcrumbs.push({ label: titolo });
       </article>
       
       <!-- Article Navigation -->
-      <nav class="flex justify-between items-center mt-12 pt-8 border-t border-gray-200" aria-label="Navigazione articoli">
+      <nav class="flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700" aria-label="Navigazione articoli">
         {adjacent.prev ? (
           <a 
             href={getArticlePath(adjacent.prev.numero, adjacent.prev.tipo)} 
-            class="flex flex-col gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 no-underline"
+            class="flex flex-col gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 no-underline"
           >
-            <span class="text-xs text-gray-500 uppercase tracking-wide">Precedente</span>
-            <span class="font-serif text-lg text-gray-900">
+            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Precedente</span>
+            <span class="font-serif text-lg text-gray-900 dark:text-gray-100">
               {adjacent.prev.tipo === 'articolo' ? `Art. ${adjacent.prev.numero}` : `Disp. ${adjacent.prev.numero}`}
             </span>
           </a>
@@ -103,10 +103,10 @@ breadcrumbs.push({ label: titolo });
         {adjacent.next ? (
           <a 
             href={getArticlePath(adjacent.next.numero, adjacent.next.tipo)} 
-            class="flex flex-col items-end gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 no-underline"
+            class="flex flex-col items-end gap-1 p-3 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 no-underline"
           >
-            <span class="text-xs text-gray-500 uppercase tracking-wide">Successivo</span>
-            <span class="font-serif text-lg text-gray-900">
+            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Successivo</span>
+            <span class="font-serif text-lg text-gray-900 dark:text-gray-100">
               {adjacent.next.tipo === 'articolo' ? `Art. ${adjacent.next.numero}` : `Disp. ${adjacent.next.numero}`}
             </span>
           </a>

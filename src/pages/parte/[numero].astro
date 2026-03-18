@@ -1,63 +1,51 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../components/Layout.astro';
-import { costituzioneStructure } from '../../data/structure';
+import SectionLayout from '../../components/SectionLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { costituzioneStructure, sortArticlesByNumber } from '../../data/structure';
 
 export function getStaticPaths() {
   return [
-    { params: { numero: '1' } },
-    { params: { numero: '2' } },
+    { params: { numero: '1' }, props: { parteIndex: 0 } },
+    { params: { numero: '2' }, props: { parteIndex: 1 } },
   ];
 }
 
-const { numero } = Astro.params;
-const parteIndex = numero === '1' ? 0 : 1;
+interface Props {
+  parteIndex: number;
+}
+
+const { parteIndex } = Astro.props;
 const parte = costituzioneStructure.parti[parteIndex];
 
-const articoli = await getCollection('articoli', ({ data }) => 
+const articoliRaw = await getCollection('articoli', ({ data }) => 
   data.tipo === 'articolo' && data.parte === parte.numero
 );
 
-// Sort by article number
-articoli.sort((a, b) => (a.data.numero as number) - (b.data.numero as number));
+const articoli = sortArticlesByNumber(articoliRaw);
+
+const firstArticle = parte.titoli[0].articoli[0];
+const lastTitolo = parte.titoli[parte.titoli.length - 1];
+const lastArticle = lastTitolo.articoli[lastTitolo.articoli.length - 1];
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: `Parte ${parte.numero}` },
+];
 ---
 
-<Layout 
-  title={`Parte ${parte.numero} - ${parte.nome}`} 
-  description={`${parte.nome} - Costituzione della Repubblica Italiana`}
+<SectionLayout 
+  title={`Parte ${parte.numero} - ${parte.nome}`}
+  description={`Articoli ${firstArticle} - ${lastArticle}`}
+  metaDescription={`${parte.nome} - Costituzione della Repubblica Italiana`}
+  breadcrumbs={breadcrumbs}
 >
-  <main class="py-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <header class="max-w-3xl mx-auto mb-10 text-center">
-        <nav class="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-gray-500">
-          <a href="/" class="text-gray-600 hover:text-primary no-underline">Home</a>
-          <span class="text-gray-300">/</span>
-          <span class="text-gray-900">Parte {parte.numero}</span>
-        </nav>
-        <h1 class="font-serif text-4xl text-primary mb-4">Parte {parte.numero} - {parte.nome}</h1>
-        <p class="text-lg text-gray-600 max-w-xl mx-auto">
-          Articoli {parte.titoli[0].articoli[0]} - {parte.titoli[parte.titoli.length - 1].articoli[parte.titoli[parte.titoli.length - 1].articoli.length - 1]}
-        </p>
-      </header>
-
-      <div class="grid gap-4 max-w-3xl mx-auto">
-        {articoli.map((articolo) => (
-          <a href={`/articolo/${articolo.data.numero}`} class:list={[
-            "block p-5 bg-gray-50 border border-gray-200 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg no-underline",
-            { 'opacity-60': articolo.data.abrogato }
-          ]}>
-            <span class="inline-block px-3 py-1 bg-primary text-white rounded text-sm font-semibold mb-3">
-              Art. {articolo.data.numero}
-              {articolo.data.abrogato && (
-                <span class="ml-2 text-xs px-1 bg-red-500 rounded">abrogato</span>
-              )}
-            </span>
-            <p class="m-0 text-gray-600 font-serif leading-relaxed">
-              {articolo.data.descrizione}
-            </p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </main>
-</Layout>
+  {articoli.map((articolo) => (
+    <ArticleCard
+      numero={articolo.data.numero}
+      tipo={articolo.data.tipo}
+      descrizione={articolo.data.descrizione}
+      abrogato={articolo.data.abrogato}
+    />
+  ))}
+</SectionLayout>

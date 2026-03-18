@@ -6,6 +6,9 @@
  * Primary: Savoy Blue (#4B61D1)
  */
 
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Primary Colors - Savoy Blue */
   --color-primary: #4B61D1;
@@ -21,12 +24,6 @@
   --font-serif: 'Crimson Text', 'Georgia', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-/* Dark mode overrides */
-[data-theme="dark"] {
-  --color-primary-bg: #1e2340;
-  --color-abrogato-bg: #2d1f1f;
 }
 
 /* Base styles */
@@ -61,4 +58,10 @@ body {
   @page {
     margin: 2cm;
   }
+}
+
+/* Disable transitions on page load to prevent flash */
+.no-transitions,
+.no-transitions * {
+  transition: none !important;
 }

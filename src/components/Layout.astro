@@ -20,13 +20,30 @@ import SearchModal from './SearchModal.astro';
 ---
 
 <!doctype html>
-<html lang="it" class="min-h-screen">
+<html lang="it" class="min-h-screen no-transitions">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Theme initialization (runs before page renders to prevent flash) -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+        // Enable transitions after a short delay
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.documentElement.classList.remove('no-transitions');
+          });
+        });
+      })();
+    </script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +52,7 @@ import SearchModal from './SearchModal.astro';
     
     <title>{fullTitle}</title>
   </head>
-  <body class="min-h-screen bg-white text-gray-900">
+  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <Header />
     <slot />
     <Footer />
