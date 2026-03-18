@@ -1,5 +1,6 @@
 ---
 import Layout from '../components/Layout.astro';
+import { Container, Card, Badge, LinkButton } from '../components/ui';
 import { costituzioneStructure } from '../data/structure';
 
 const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStructure;
@@ -7,7 +8,7 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
 
 <Layout>
   <main class="py-8">
-    <div class="max-w-6xl mx-auto px-4">
+    <Container>
       <!-- Hero Section -->
       <header class="text-center py-12 border-b border-gray-200 dark:border-gray-700 mb-12">
         <h1 class="text-4xl md:text-5xl font-serif font-semibold text-primary mb-4">
@@ -32,11 +33,11 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
 
       <!-- Quick Navigation -->
       <nav class="flex justify-center gap-4 mb-12 flex-wrap">
-        <a href="/articolo/1" class="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg font-medium text-gray-900 dark:text-gray-100 transition-colors hover:bg-primary-bg dark:hover:bg-primary/20 hover:border-primary hover:text-primary no-underline">
+        <LinkButton href="/articolo/1">
           <span class="flex items-center justify-center w-6 h-6 bg-primary text-white text-xs font-bold rounded">1</span>
           <span>Vai all'Art. 1</span>
-        </a>
-        <a href="/testo-completo" class="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg font-medium text-gray-900 dark:text-gray-100 transition-colors hover:bg-primary-bg dark:hover:bg-primary/20 hover:border-primary hover:text-primary no-underline">
+        </LinkButton>
+        <LinkButton href="/testo-completo">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14,2 14,8 20,8"/>
@@ -44,78 +45,85 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
             <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
           <span>Testo completo</span>
-        </a>
+        </LinkButton>
       </nav>
 
       <!-- Structure Overview -->
       <section class="grid gap-10 mb-12">
         <!-- Principi Fondamentali -->
-        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+        <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/principi-fondamentali" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">{principiFondamentali.nome}</a>
+            <a href="/principi-fondamentali" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+              {principiFondamentali.nome}
+            </a>
           </h2>
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 1 - 12</p>
           <div class="flex flex-wrap gap-2">
             {principiFondamentali.articoli.map((num) => (
-              <a href={`/articolo/${num}`} class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-sm text-gray-600 dark:text-gray-400 no-underline transition-colors hover:border-primary hover:text-primary">
-                Art. {num}
-              </a>
+              <Badge variant="outline" href={`/articolo/${num}`}>Art. {num}</Badge>
             ))}
           </div>
-        </div>
+        </Card>
 
         <!-- Parte I -->
-        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+        <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/1" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">Parte I - {parti[0].nome}</a>
+            <a href="/parte/1" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+              Parte I - {parti[0].nome}
+            </a>
           </h2>
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 13 - 54</p>
           <div class="grid gap-4">
             {parti[0].titoli.map((titolo) => (
-              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
-                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+              <Card variant="inner">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                  Titolo {titolo.numero} - {titolo.nome}
+                </h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
+        </Card>
 
         <!-- Parte II -->
-        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+        <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/2" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">Parte II - {parti[1].nome}</a>
+            <a href="/parte/2" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+              Parte II - {parti[1].nome}
+            </a>
           </h2>
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Articoli 55 - 139</p>
           <div class="grid gap-4">
             {parti[1].titoli.map((titolo) => (
-              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg">
-                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Titolo {titolo.numero} - {titolo.nome}</h3>
+              <Card variant="inner">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                  Titolo {titolo.numero} - {titolo.nome}
+                </h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400 m-0">
                   Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
                 </p>
-              </div>
+              </Card>
             ))}
           </div>
-        </div>
+        </Card>
 
         <!-- Disposizioni Transitorie -->
-        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+        <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/disposizioni-transitorie" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">{disposizioniTransitorie.nome}</a>
+            <a href="/disposizioni-transitorie" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+              {disposizioniTransitorie.nome}
+            </a>
           </h2>
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Disposizioni I - XVIII</p>
           <div class="flex flex-wrap gap-2">
             {disposizioniTransitorie.disposizioni.map((num) => (
-              <a href={`/disposizione/${num.toLowerCase()}`} class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-sm text-gray-600 dark:text-gray-400 no-underline transition-colors hover:border-primary hover:text-primary">
-                {num}
-              </a>
+              <Badge variant="outline" href={`/disposizione/${num.toLowerCase()}`}>{num}</Badge>
             ))}
           </div>
-        </div>
+        </Card>
       </section>
-
-    </div>
+    </Container>
   </main>
 </Layout>

@@ -1,0 +1,40 @@
+---
+/**
+ * Badge Component
+ * 
+ * Small inline labels for article numbers, tags, etc.
+ * 
+ * @example
+ * <Badge>Art. 1</Badge>
+ * <Badge variant="outline" href="/articolo/1">Art. 1</Badge>
+ * <Badge variant="muted">abrogato</Badge>
+ */
+
+interface Props {
+  /** Badge style variant */
+  variant?: 'primary' | 'outline' | 'muted';
+  /** Makes the badge a link */
+  href?: string;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { variant = 'primary', href, class: className } = Astro.props;
+
+const variantClasses = {
+  primary: 'px-3 py-1 bg-primary text-white rounded text-sm font-semibold',
+  outline: 'px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-sm text-gray-600 dark:text-gray-400 transition-colors hover:border-primary hover:text-primary',
+  muted: 'px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded text-xs',
+};
+
+const linkClasses = href ? 'no-underline' : '';
+
+const Element = href ? 'a' : 'span';
+---
+
+<Element 
+  href={href}
+  class:list={[variantClasses[variant], linkClasses, className]}
+>
+  <slot />
+</Element>

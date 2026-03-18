@@ -1,0 +1,29 @@
+---
+/**
+ * Container Component
+ * 
+ * Page-level container with consistent max-width and padding.
+ * 
+ * @example
+ * <Container>Full width content</Container>
+ * <Container size="narrow">Narrow content</Container>
+ */
+
+interface Props {
+  /** Container width: 'default' (max-w-6xl) or 'narrow' (max-w-3xl) */
+  size?: 'default' | 'narrow';
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { size = 'default', class: className } = Astro.props;
+
+const sizeClasses = {
+  default: 'max-w-6xl',
+  narrow: 'max-w-3xl',
+};
+---
+
+<div class:list={['mx-auto px-4', sizeClasses[size], className]}>
+  <slot />
+</div>

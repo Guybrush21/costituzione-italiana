@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../components/Layout.astro';
-import { costituzioneStructure, ROMAN_NUMERAL_ORDER, sortArticlesByNumber } from '../data/structure';
+import { Container, Card } from '../components/ui';
+import { costituzioneStructure, sortArticlesByNumber } from '../data/structure';
 
 // Get all articles and dispositions
 const allArticoli = await getCollection('articoli');
@@ -57,6 +58,9 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
     );
   }
 }
+
+// Shared prose classes for article content
+const proseClasses = 'font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none';
 ---
 
 <Layout 
@@ -64,7 +68,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
   description="Il testo completo della Costituzione della Repubblica Italiana"
 >
   <main class="py-8">
-    <div class="max-w-6xl mx-auto px-4">
+    <Container>
       <header class="text-center mb-12 pb-8 border-b-2 border-primary">
         <h1 class="text-4xl font-serif text-primary mb-2">Costituzione della Repubblica Italiana</h1>
         <p class="text-lg text-gray-500 dark:text-gray-400 mb-6">Testo completo</p>
@@ -82,7 +86,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
       </header>
 
       <!-- Preamble -->
-      <section class="max-w-3xl mx-auto mb-12 p-8 bg-gray-50 dark:bg-gray-800/50 rounded-xl font-serif text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300">
+      <Card class="max-w-3xl mx-auto mb-12 p-8 font-serif text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300">
         <p class="mb-4"><strong class="text-gray-900 dark:text-gray-100">IL CAPO PROVVISORIO DELLO STATO</strong></p>
         <p class="mb-4">
           Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
@@ -91,7 +95,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
         <p class="mb-4">Vista la XVIII disposizione finale della Costituzione;</p>
         <p class="mb-4"><strong class="text-gray-900 dark:text-gray-100">PROMULGA</strong></p>
         <p class="m-0">la Costituzione della Repubblica Italiana nel seguente testo:</p>
-      </section>
+      </Card>
 
       <!-- Principi Fondamentali -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
@@ -104,7 +108,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
             id={`art-${data.numero}`}
           >
             <h3 class="text-base font-semibold text-primary mb-3">{data.titolo}</h3>
-            <div class:list={['font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
+            <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
               <rendered.Content />
             </div>
           </article>
@@ -128,7 +132,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
                 id={`art-${data.numero}`}
               >
                 <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                <div class:list={['font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
+                <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
                   <rendered.Content />
                 </div>
               </article>
@@ -161,7 +165,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
                       id={`art-${data.numero}`}
                     >
                       <h5 class="text-base font-semibold text-primary mb-3">{data.titolo}</h5>
-                      <div class:list={['font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
+                      <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
                         <rendered.Content />
                       </div>
                     </article>
@@ -175,7 +179,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
                   id={`art-${data.numero}`}
                 >
                   <h4 class="text-base font-semibold text-primary mb-3">{data.titolo}</h4>
-                  <div class:list={['font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
+                  <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
                     <rendered.Content />
                   </div>
                 </article>
@@ -196,7 +200,7 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
             id={`disp-${(data.numero as string).toLowerCase()}`}
           >
             <h3 class="text-base font-semibold text-primary mb-3">{data.numero}.</h3>
-            <div class:list={['font-serif leading-relaxed prose dark:prose-invert prose-p:mb-3 prose-p:text-justify prose-ul:my-3 prose-ul:pl-6 max-w-none', { 'italic': data.abrogato }]}>
+            <div class:list={[proseClasses, { 'italic': data.abrogato }]}>
               <rendered.Content />
             </div>
           </article>
@@ -212,6 +216,6 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
         <p class="mb-4">Il Presidente del Consiglio dei Ministri<br><em>Alcide De Gasperi</em></p>
         <p class="mb-4">Visto, il Guardasigilli:<br><em>Giuseppe Grassi</em></p>
       </footer>
-    </div>
+    </Container>
   </main>
 </Layout>

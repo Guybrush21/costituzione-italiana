@@ -1,0 +1,38 @@
+---
+/**
+ * Card Component
+ * 
+ * Flexible card component with multiple variants.
+ * 
+ * @example
+ * <Card>Default section card</Card>
+ * <Card variant="inner">Inner card</Card>
+ * <Card variant="interactive" href="/link">Clickable card</Card>
+ */
+
+interface Props {
+  /** Card style variant */
+  variant?: 'section' | 'inner' | 'interactive';
+  /** Makes the card a link (enables hover states) */
+  href?: string;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const { variant = 'section', href, class: className } = Astro.props;
+
+const baseClasses = {
+  section: 'p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl',
+  inner: 'p-4 bg-white dark:bg-gray-800 rounded-lg',
+  interactive: 'block p-5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg transition-colors hover:border-primary hover:bg-primary-bg dark:hover:bg-gray-700 no-underline',
+};
+
+const Element = href ? 'a' : 'div';
+---
+
+<Element 
+  href={href}
+  class:list={[baseClasses[variant], className]}
+>
+  <slot />
+</Element>
