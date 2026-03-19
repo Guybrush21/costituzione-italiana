@@ -1,43 +1,24 @@
-# Astro Starter Kit: Minimal
+# Costituzione Italiana
 
-```sh
-npm create astro@latest -- --template minimal
-```
+La Costituzione della Repubblica Italiana consultabile online.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Visualizza
 
-## 🚀 Project Structure
+Il sito è disponibile su [costituzione-italiana.it](https://costituzione-italiana.it)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Sviluppo
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Progetto realizzato con [Astro](https://astro.build).
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Comandi
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| Comando           | Azione                                          |
+| :---------------- | :---------------------------------------------- |
+| `npm install`     | Installa le dipendenze                          |
+| `npm run dev`     | Avvia il server di sviluppo su `localhost:4321` |
+| `npm run build`   | Compila il sito per la produzione in `./dist/`  |
+| `npm run preview` | Anteprima locale della build                    |
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Ringraziamenti
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Il testo della Costituzione proviene dal repository [lbreda/costituzione](https://github.com/lbreda/costituzione).
