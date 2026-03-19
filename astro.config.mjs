@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://costituzione.italiana.it", // TODO: Update with your actual domain
+  site: "https://www.costituzione-italiana.it",
   vite: {
     plugins: [tailwindcss()],
   },
