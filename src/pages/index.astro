@@ -1,30 +1,45 @@
 ---
-import Layout from '../components/Layout.astro';
-import { Container, Card, Badge, LinkButton, Icon, PageTitle, Text } from '../components/ui';
-import { costituzioneStructure } from '../data/structure';
+import Layout from "../components/Layout.astro";
+import {
+  Container,
+  Card,
+  Badge,
+  LinkButton,
+  Icon,
+  PageTitle,
+  Text,
+} from "../components/ui";
+import { costituzioneStructure } from "../data/structure";
 
-const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStructure;
+const { principiFondamentali, parti, disposizioniTransitorie } =
+  costituzioneStructure;
 ---
 
 <Layout>
   <main class="py-8">
     <Container>
       <!-- Hero Section -->
-      <header class="text-center py-12 border-b border-gray-200 dark:border-gray-700 mb-12">
+      <header
+        class="text-center py-12 border-b border-gray-200 dark:border-gray-700 mb-12"
+      >
         <PageTitle>Costituzione della Repubblica Italiana</PageTitle>
         <Text muted size="lg" class="mb-8">
-          Promulgata il 27 dicembre 1947<br>
-          Entrata in vigore il 1° gennaio 1948<br/>
+          Promulgata il 27 dicembre 1947<br />
+          Entrata in vigore il 1° gennaio 1948<br />
           Testo aggiornato alla legge costituzionale 26 settembre 2023, N. 1
         </Text>
         <div class="flex justify-center gap-12">
           <div class="flex flex-col items-center">
             <span class="font-serif text-3xl font-bold text-primary">139</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">Articoli</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400"
+              >Articoli</span
+            >
           </div>
           <div class="flex flex-col items-center">
-            <span class="font-serif text-3xl font-bold text-primary">XVIII</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">Disposizioni Transitorie</span>
+            <span class="font-serif text-3xl font-bold text-primary">18</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400"
+              >Disposizioni Transitorie</span
+            >
           </div>
         </div>
       </header>
@@ -32,7 +47,10 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
       <!-- Quick Navigation -->
       <nav class="flex justify-center gap-4 mb-12 flex-wrap">
         <LinkButton href="/articolo/1">
-          <span class="flex items-center justify-center w-6 h-6 bg-primary text-white text-xs font-bold rounded">1</span>
+          <span
+            class="flex items-center justify-center w-6 h-6 bg-primary text-white text-xs font-bold rounded"
+            >1</span
+          >
           <span>Vai all'Art. 1</span>
         </LinkButton>
         <LinkButton href="/testo-completo">
@@ -46,78 +64,119 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
         <!-- Principi Fondamentali -->
         <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/principi-fondamentali" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+            <a
+              href="/principi-fondamentali"
+              class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary"
+            >
               {principiFondamentali.nome}
             </a>
           </h2>
           <Text muted noMargin class="mb-4">Articoli 1 - 12</Text>
           <div class="flex flex-wrap gap-2">
-            {principiFondamentali.articoli.map((num) => (
-              <Badge variant="outline" href={`/articolo/${num}`}>Art. {num}</Badge>
-            ))}
+            {
+              principiFondamentali.articoli.map((num) => (
+                <Badge variant="outline" href={`/articolo/${num}`}>
+                  Art. {num}
+                </Badge>
+              ))
+            }
           </div>
         </Card>
 
         <!-- Parte I -->
         <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/1" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+            <a
+              href="/parte/1"
+              class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary"
+            >
               Parte I - {parti[0].nome}
             </a>
           </h2>
           <Text muted noMargin class="mb-4">Articoli 13 - 54</Text>
           <div class="grid gap-4">
-            {parti[0].titoli.map((titolo) => (
-              <a href={`/articolo/${titolo.articoli[0]}`} class="block no-underline">
-                <Card variant="inner" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                  <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                    Titolo {titolo.numero} - {titolo.nome}
-                  </h3>
-                  <Text muted noMargin>
-                    Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                  </Text>
-                </Card>
-              </a>
-            ))}
+            {
+              parti[0].titoli.map((titolo) => (
+                <a
+                  href={`/articolo/${titolo.articoli[0]}`}
+                  class="block no-underline"
+                >
+                  <Card
+                    variant="inner"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                  >
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                      Titolo {titolo.numero} - {titolo.nome}
+                    </h3>
+                    <Text muted noMargin>
+                      Art. {titolo.articoli[0]} -{" "}
+                      {titolo.articoli[titolo.articoli.length - 1]}
+                    </Text>
+                  </Card>
+                </a>
+              ))
+            }
           </div>
         </Card>
 
         <!-- Parte II -->
         <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/parte/2" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+            <a
+              href="/parte/2"
+              class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary"
+            >
               Parte II - {parti[1].nome}
             </a>
           </h2>
           <Text muted noMargin class="mb-4">Articoli 55 - 139</Text>
           <div class="grid gap-4">
-            {parti[1].titoli.map((titolo) => (
-              <a href={`/articolo/${titolo.articoli[0]}`} class="block no-underline">
-                <Card variant="inner" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                  <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                    Titolo {titolo.numero} - {titolo.nome}
-                  </h3>
-                  <Text muted noMargin>
-                    Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                  </Text>
-                </Card>
-              </a>
-            ))}
+            {
+              parti[1].titoli.map((titolo) => (
+                <a
+                  href={`/articolo/${titolo.articoli[0]}`}
+                  class="block no-underline"
+                >
+                  <Card
+                    variant="inner"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                  >
+                    <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                      Titolo {titolo.numero} - {titolo.nome}
+                    </h3>
+                    <Text muted noMargin>
+                      Art. {titolo.articoli[0]} -{" "}
+                      {titolo.articoli[titolo.articoli.length - 1]}
+                    </Text>
+                  </Card>
+                </a>
+              ))
+            }
           </div>
         </Card>
 
         <!-- Disposizioni Transitorie -->
         <Card>
           <h2 class="mb-2 font-serif text-2xl">
-            <a href="/disposizioni-transitorie" class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary">
+            <a
+              href="/disposizioni-transitorie"
+              class="text-gray-900 dark:text-gray-100 no-underline hover:text-primary"
+            >
               {disposizioniTransitorie.nome}
             </a>
           </h2>
           <Text muted noMargin class="mb-4">Disposizioni I - XVIII</Text>
           <div class="flex flex-wrap gap-2">
-            {disposizioniTransitorie.disposizioni.map((num) => (
-              <Badge variant="outline" href={`/disposizione/${num.toLowerCase()}`}>{num}</Badge>
-            ))}
+            {
+              disposizioniTransitorie.disposizioni.map((num) => (
+                <Badge
+                  variant="outline"
+                  href={`/disposizione/${num.toLowerCase()}`}
+                >
+                  {num}
+                </Badge>
+              ))
+            }
           </div>
         </Card>
       </section>

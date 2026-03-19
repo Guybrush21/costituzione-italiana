@@ -105,20 +105,21 @@ Disposizioni Transitorie e Finali (I-XVIII)
 ```
 
 Helper functions:
+
 - `getArticleContext(articleNumber)` - Get part/title/section for an article
 - `getAdjacentArticles(numero)` - Get prev/next article info
 - `getArticlePath(numero, tipo)` - Generate URL path
 
 ### Routing
 
-| Route | Description |
-|-------|-------------|
-| `/articolo/[numero]` | Individual articles (1-139) |
-| `/disposizione/[numero]` | Transitional dispositions (i-xviii, lowercase) |
-| `/parte/1`, `/parte/2` | Part overview pages |
-| `/principi-fondamentali` | Fundamental Principles (Art. 1-12) |
-| `/disposizioni-transitorie` | Transitional dispositions overview |
-| `/testo-completo` | Full text (print-friendly) |
+| Route                       | Description                                    |
+| --------------------------- | ---------------------------------------------- |
+| `/articolo/[numero]`        | Individual articles (1-139)                    |
+| `/disposizione/[numero]`    | Transitional dispositions (i-xviii, lowercase) |
+| `/parte/1`, `/parte/2`      | Part overview pages                            |
+| `/principi-fondamentali`    | Fundamental Principles (Art. 1-12)             |
+| `/disposizioni-transitorie` | Transitional dispositions overview             |
+| `/testo-completo`           | Full text (print-friendly)                     |
 
 ## Important Notes
 

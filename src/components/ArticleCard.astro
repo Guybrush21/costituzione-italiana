@@ -1,34 +1,41 @@
 ---
 /**
  * ArticleCard Component
- * 
+ *
  * Displays a card for an article or disposition with a link to its detail page.
  */
-import { Card, Badge } from './ui';
+import { Card, Badge } from "./ui";
 
 interface Props {
   numero: number | string;
-  tipo: 'articolo' | 'disposizione';
+  tipo: "articolo" | "disposizione";
   descrizione: string;
   abrogato?: boolean;
 }
 
 const { numero, tipo, descrizione, abrogato = false } = Astro.props;
 
-const href = tipo === 'disposizione' 
-  ? `/disposizione/${String(numero).toLowerCase()}`
-  : `/articolo/${numero}`;
+const href =
+  tipo === "disposizione"
+    ? `/disposizione/${String(numero).toLowerCase()}`
+    : `/articolo/${numero}`;
 
-const label = tipo === 'articolo' ? `Art. ${numero}` : String(numero);
+const label = tipo === "articolo" ? `Art. ${numero}` : String(numero);
 ---
 
-<Card variant="interactive" href={href} class:list={[{ 'opacity-60': abrogato }]}>
+<Card
+  variant="interactive"
+  href={href}
+  class:list={[{ "opacity-60": abrogato }]}
+>
   <span class="inline-block mb-3">
     <Badge>
       {label}
-      {abrogato && (
-        <span class="ml-2 text-xs px-1 bg-red-500 rounded">abrogato</span>
-      )}
+      {
+        abrogato && (
+          <span class="ml-2 text-xs px-1 bg-red-500 rounded">abrogato</span>
+        )
+      }
     </Badge>
   </span>
   <p class="m-0 text-gray-600 dark:text-gray-300 font-serif leading-relaxed">

@@ -1,9 +1,9 @@
 ---
 /**
  * Text Component
- * 
+ *
  * Styled text with semantic variants for consistent typography.
- * 
+ *
  * @example
  * <Text muted>Articoli 1 - 12</Text>
  * <Text muted size="lg">Some description</Text>
@@ -13,32 +13,34 @@ interface Props {
   /** Text variant */
   muted?: boolean;
   /** Text size */
-  size?: 'sm' | 'base' | 'lg';
+  size?: "sm" | "base" | "lg";
   /** Remove bottom margin */
   noMargin?: boolean;
   /** Additional CSS classes */
   class?: string;
 }
 
-const { 
+const {
   muted = false,
-  size = 'sm',
+  size = "sm",
   noMargin = false,
-  class: className 
+  class: className,
 } = Astro.props;
 
 const sizeClasses = {
-  sm: 'text-sm',
-  base: 'text-base',
-  lg: 'text-lg',
+  sm: "text-sm",
+  base: "text-base",
+  lg: "text-lg",
 };
 
 const classes = [
   sizeClasses[size],
-  muted && 'text-gray-500 dark:text-gray-400',
-  !noMargin && 'mb-4',
+  muted && "text-gray-500 dark:text-gray-400",
+  !noMargin && "mb-4",
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(" ");
 ---
 
 <p class={classes}>

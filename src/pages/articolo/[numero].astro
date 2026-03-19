@@ -1,11 +1,14 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from '../../components/Layout.astro';
-import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection, render } from "astro:content";
+import Layout from "../../components/Layout.astro";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
 
 export async function getStaticPaths() {
-  const articoli = await getCollection('articoli', ({ data }) => data.tipo === 'articolo');
-  
+  const articoli = await getCollection(
+    "articoli",
+    ({ data }) => data.tipo === "articolo",
+  );
+
   return articoli.map((articolo) => ({
     params: { numero: String(articolo.data.numero) },
     props: { articolo },
@@ -15,13 +18,18 @@ export async function getStaticPaths() {
 const { articolo } = Astro.props;
 const { Content } = await render(articolo);
 
-const { numero, titolo, abrogato, parte, titolo_sezione, sezione, descrizione } = articolo.data;
+const {
+  numero,
+  titolo,
+  abrogato,
+  parte,
+  titolo_sezione,
+  sezione,
+  descrizione,
+} = articolo.data;
 ---
 
-<Layout 
-  title={titolo} 
-  description={descrizione}
->
+<Layout title={titolo} description={descrizione}>
   <ArticleLayout
     numero={numero}
     tipo="articolo"

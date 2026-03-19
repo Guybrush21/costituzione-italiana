@@ -1,10 +1,10 @@
 ---
 /**
  * SectionTitle Component
- * 
+ *
  * Section heading with consistent serif styling and optional border.
  * Used for major section headers throughout the site.
- * 
+ *
  * @example
  * <SectionTitle>Principi Fondamentali</SectionTitle>
  * <SectionTitle id="parte-1" centered>Parte I</SectionTitle>
@@ -24,29 +24,31 @@ interface Props {
   class?: string;
 }
 
-const { 
-  id, 
-  level = 2, 
-  centered = false, 
+const {
+  id,
+  level = 2,
+  centered = false,
   border = true,
-  class: className 
+  class: className,
 } = Astro.props;
 
-const Tag = `h${level}` as 'h2' | 'h3' | 'h4';
+const Tag = `h${level}` as "h2" | "h3" | "h4";
 
 const sizeClasses = {
-  2: 'text-3xl mb-8 pb-4',
-  3: 'text-2xl mb-6 pb-2',
-  4: 'text-lg mb-4',
+  2: "text-3xl mb-8 pb-4",
+  3: "text-2xl mb-6 pb-2",
+  4: "text-lg mb-4",
 };
 
 const baseClasses = [
-  'font-serif text-primary',
+  "font-serif text-primary",
   sizeClasses[level],
-  centered && 'text-center',
-  border && 'border-b border-gray-300 dark:border-gray-700',
+  centered && "text-center",
+  border && "border-b border-gray-300 dark:border-gray-700",
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(" ");
 ---
 
 <Tag id={id} class={baseClasses}>

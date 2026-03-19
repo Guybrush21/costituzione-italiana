@@ -1,17 +1,17 @@
 ---
-import { getCollection } from 'astro:content';
-import { getSearchItemUrl, type SearchItem } from '../lib/search';
-import { Icon } from './ui';
+import { getCollection } from "astro:content";
+import { getSearchItemUrl, type SearchItem } from "../lib/search";
+import { Icon } from "./ui";
 
 // Build search index at build time
-const allArticoli = await getCollection('articoli');
+const allArticoli = await getCollection("articoli");
 
 const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
   numero: articolo.data.numero,
   tipo: articolo.data.tipo,
   titolo: articolo.data.titolo,
   descrizione: articolo.data.descrizione,
-  contenuto: articolo.body || '',
+  contenuto: articolo.body || "",
   url: getSearchItemUrl(articolo.data.numero, articolo.data.tipo),
 }));
 ---
@@ -20,41 +20,76 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
   window.__SEARCH_INDEX__ = searchIndex;
 </script>
 
-<div id="search-modal" class="fixed inset-0 z-[1000] flex items-start justify-center pt-[10vh]" hidden>
-  <div class="search-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-  <div class="relative w-full max-w-xl mx-4 bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="search-title">
+<div
+  id="search-modal"
+  class="fixed inset-0 z-[1000] flex items-start justify-center pt-[10vh]"
+  hidden
+>
+  <div class="search-backdrop absolute inset-0 bg-black/50 backdrop-blur-sm">
+  </div>
+  <div
+    class="relative w-full max-w-xl mx-4 bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="search-title"
+  >
     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
       <h2 id="search-title" class="sr-only">Cerca nella Costituzione</h2>
       <div class="flex items-center gap-3">
         <Icon name="search" class="shrink-0 w-5 h-5 text-gray-400" />
-        <input 
-          type="search" 
+        <input
+          type="search"
           id="search-input"
           class="flex-1 py-2 text-lg border-none bg-transparent text-gray-900 dark:text-gray-100 outline-none placeholder:text-gray-400"
           placeholder="Cerca articoli, parole chiave..."
           autocomplete="off"
           autofocus
         />
-        <kbd class="shrink-0 px-2 py-1 font-mono text-xs bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded text-gray-500 dark:text-gray-400">ESC</kbd>
+        <kbd
+          class="shrink-0 px-2 py-1 font-mono text-xs bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded text-gray-500 dark:text-gray-400"
+          >ESC</kbd
+        >
       </div>
     </div>
     <div class="max-h-[50vh] overflow-y-auto">
       <div id="search-results" class="p-2">
-        <p class="py-6 text-center text-gray-500 dark:text-gray-400">Inizia a digitare per cercare nella Costituzione...</p>
+        <p class="py-6 text-center text-gray-500 dark:text-gray-400">
+          Inizia a digitare per cercare nella Costituzione...
+        </p>
       </div>
     </div>
-    <div class="flex gap-4 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-      <span class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-        <kbd class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">↑</kbd>
-        <kbd class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">↓</kbd>
+    <div
+      class="flex gap-4 px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+    >
+      <span
+        class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400"
+      >
+        <kbd
+          class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded"
+          >↑</kbd
+        >
+        <kbd
+          class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded"
+          >↓</kbd
+        >
         per navigare
       </span>
-      <span class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-        <kbd class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">↵</kbd>
+      <span
+        class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400"
+      >
+        <kbd
+          class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded"
+          >↵</kbd
+        >
         per aprire
       </span>
-      <span class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-        <kbd class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">ESC</kbd>
+      <span
+        class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400"
+      >
+        <kbd
+          class="px-1 font-mono bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded"
+          >ESC</kbd
+        >
         per chiudere
       </span>
     </div>
@@ -62,18 +97,18 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
 </div>
 
 <script>
-  import Fuse from 'fuse.js';
-  import type { SearchItem } from '../lib/search';
+  import Fuse from "fuse.js";
+  import type { SearchItem } from "../lib/search";
 
   // Get search index from the page (type-safe via global declaration in search.ts)
   const searchIndex = window.__SEARCH_INDEX__;
-  
+
   // Initialize Fuse.js
   const fuse = new Fuse(searchIndex, {
     keys: [
-      { name: 'titolo', weight: 0.3 },
-      { name: 'descrizione', weight: 0.4 },
-      { name: 'contenuto', weight: 0.3 },
+      { name: "titolo", weight: 0.3 },
+      { name: "descrizione", weight: 0.4 },
+      { name: "contenuto", weight: 0.3 },
     ],
     includeMatches: true,
     threshold: 0.3,
@@ -81,99 +116,111 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
   });
 
   // DOM elements
-  const modal = document.getElementById('search-modal');
-  const backdrop = modal?.querySelector('.search-backdrop');
-  const input = document.getElementById('search-input') as HTMLInputElement;
-  const results = document.getElementById('search-results');
-  const searchTrigger = document.getElementById('search-trigger');
+  const modal = document.getElementById("search-modal");
+  const backdrop = modal?.querySelector(".search-backdrop");
+  const input = document.getElementById("search-input") as HTMLInputElement;
+  const results = document.getElementById("search-results");
+  const searchTrigger = document.getElementById("search-trigger");
 
   let selectedIndex = -1;
 
   function openSearch() {
-    modal?.removeAttribute('hidden');
-    document.body.style.overflow = 'hidden';
+    modal?.removeAttribute("hidden");
+    document.body.style.overflow = "hidden";
     input?.focus();
   }
 
   function closeSearch() {
-    modal?.setAttribute('hidden', '');
-    document.body.style.overflow = '';
-    if (input) input.value = '';
-    if (results) results.innerHTML = '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Inizia a digitare per cercare nella Costituzione...</p>';
+    modal?.setAttribute("hidden", "");
+    document.body.style.overflow = "";
+    if (input) input.value = "";
+    if (results)
+      results.innerHTML =
+        '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Inizia a digitare per cercare nella Costituzione...</p>';
     selectedIndex = -1;
   }
 
   function performSearch(query: string) {
     if (!results) return;
-    
+
     if (query.length < 2) {
-      results.innerHTML = '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Inizia a digitare per cercare nella Costituzione...</p>';
+      results.innerHTML =
+        '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Inizia a digitare per cercare nella Costituzione...</p>';
       selectedIndex = -1;
       return;
     }
 
     const searchResults = fuse.search(query, { limit: 10 });
-    
+
     if (searchResults.length === 0) {
-      results.innerHTML = '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Nessun risultato trovato</p>';
+      results.innerHTML =
+        '<p class="py-6 text-center text-gray-500 dark:text-gray-400">Nessun risultato trovato</p>';
       selectedIndex = -1;
       return;
     }
 
-    results.innerHTML = searchResults.map((result, index) => {
-      const item = result.item;
-      const label = item.tipo === 'articolo' ? `Art. ${item.numero}` : `Disp. ${item.numero}`;
-      
-      return `
+    results.innerHTML = searchResults
+      .map((result, index) => {
+        const item = result.item;
+        const label =
+          item.tipo === "articolo"
+            ? `Art. ${item.numero}`
+            : `Disp. ${item.numero}`;
+
+        return `
         <a href="${item.url}" class="search-result flex items-center gap-3 p-3 rounded-lg text-gray-900 dark:text-gray-100 no-underline transition-colors hover:bg-primary-bg dark:hover:bg-gray-700" data-index="${index}">
           <span class="shrink-0 px-2 py-1 text-sm font-semibold text-primary bg-gray-100 dark:bg-gray-700 rounded">${label}</span>
           <span class="text-sm text-gray-600 dark:text-gray-300 overflow-hidden text-ellipsis whitespace-nowrap">${highlightMatch(item.descrizione, query)}</span>
         </a>
       `;
-    }).join('');
+      })
+      .join("");
 
     selectedIndex = 0;
     updateSelection();
   }
 
   function highlightMatch(text: string, query: string): string {
-    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-    return text.replace(regex, '<mark class="bg-primary/20 text-primary">$1</mark>');
+    const regex = new RegExp(`(${escapeRegex(query)})`, "gi");
+    return text.replace(
+      regex,
+      '<mark class="bg-primary/20 text-primary">$1</mark>',
+    );
   }
 
   function escapeRegex(str: string): string {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   function updateSelection() {
-    const items = results?.querySelectorAll('.search-result');
+    const items = results?.querySelectorAll(".search-result");
     items?.forEach((item, index) => {
       if (index === selectedIndex) {
-        item.classList.add('bg-primary-bg');
+        item.classList.add("bg-primary-bg");
       } else {
-        item.classList.remove('bg-primary-bg');
+        item.classList.remove("bg-primary-bg");
       }
     });
   }
 
-  function navigateResults(direction: 'up' | 'down') {
-    const items = results?.querySelectorAll('.search-result');
+  function navigateResults(direction: "up" | "down") {
+    const items = results?.querySelectorAll(".search-result");
     if (!items || items.length === 0) return;
 
-    if (direction === 'down') {
+    if (direction === "down") {
       selectedIndex = (selectedIndex + 1) % items.length;
     } else {
       selectedIndex = selectedIndex <= 0 ? items.length - 1 : selectedIndex - 1;
     }
-    
+
     updateSelection();
-    items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+    items[selectedIndex]?.scrollIntoView({ block: "nearest" });
   }
 
   function selectResult() {
-    const items = results?.querySelectorAll('.search-result');
+    const items = results?.querySelectorAll(".search-result");
     if (!items || selectedIndex < 0) return;
-    
+
     const selected = items[selectedIndex] as HTMLAnchorElement;
     if (selected) {
       closeSearch();
@@ -182,34 +229,34 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
   }
 
   // Event listeners
-  searchTrigger?.addEventListener('click', openSearch);
-  backdrop?.addEventListener('click', closeSearch);
+  searchTrigger?.addEventListener("click", openSearch);
+  backdrop?.addEventListener("click", closeSearch);
 
-  input?.addEventListener('input', (e) => {
+  input?.addEventListener("input", (e) => {
     performSearch((e.target as HTMLInputElement).value);
   });
 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener("keydown", (e) => {
     // Open search with Cmd/Ctrl + K
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
       openSearch();
     }
 
     // Close with Escape
-    if (e.key === 'Escape' && !modal?.hasAttribute('hidden')) {
+    if (e.key === "Escape" && !modal?.hasAttribute("hidden")) {
       closeSearch();
     }
 
     // Navigate results
-    if (!modal?.hasAttribute('hidden')) {
-      if (e.key === 'ArrowDown') {
+    if (!modal?.hasAttribute("hidden")) {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
-        navigateResults('down');
-      } else if (e.key === 'ArrowUp') {
+        navigateResults("down");
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        navigateResults('up');
-      } else if (e.key === 'Enter') {
+        navigateResults("up");
+      } else if (e.key === "Enter") {
         e.preventDefault();
         selectResult();
       }
@@ -217,8 +264,8 @@ const searchIndex: SearchItem[] = allArticoli.map((articolo) => ({
   });
 
   // Click on result
-  results?.addEventListener('click', (e) => {
-    const target = (e.target as HTMLElement).closest('.search-result');
+  results?.addEventListener("click", (e) => {
+    const target = (e.target as HTMLElement).closest(".search-result");
     if (target) {
       closeSearch();
     }

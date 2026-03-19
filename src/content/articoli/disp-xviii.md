@@ -21,7 +21,7 @@ _Data a Roma, addì 27 dicembre 1947._
 
 _Enrico De Nicola_
 
-*CONTROFIRMANO:*
+_CONTROFIRMANO:_
 
 Il Presidente dell’Assemblea Costituente
 _Umberto Terracini_

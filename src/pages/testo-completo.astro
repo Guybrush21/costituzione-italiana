@@ -1,15 +1,24 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from '../components/Layout.astro';
-import { Container, Card, Icon, PageTitle, SectionTitle, ArticleItem } from '../components/ui';
-import { costituzioneStructure, sortArticlesByNumber } from '../data/structure';
+import { getCollection, render } from "astro:content";
+import Layout from "../components/Layout.astro";
+import {
+  Container,
+  Card,
+  Icon,
+  PageTitle,
+  SectionTitle,
+  ArticleItem,
+} from "../components/ui";
+import { costituzioneStructure, sortArticlesByNumber } from "../data/structure";
 
 // Get all articles and dispositions
-const allArticoli = await getCollection('articoli');
+const allArticoli = await getCollection("articoli");
 
 // Separate articles and dispositions
-const articoliRaw = allArticoli.filter(a => a.data.tipo === 'articolo');
-const disposizioniRaw = allArticoli.filter(a => a.data.tipo === 'disposizione');
+const articoliRaw = allArticoli.filter((a) => a.data.tipo === "articolo");
+const disposizioniRaw = allArticoli.filter(
+  (a) => a.data.tipo === "disposizione",
+);
 
 // Sort using shared utility
 const articoli = sortArticlesByNumber(articoliRaw);
@@ -20,24 +29,28 @@ const renderedArticoli = await Promise.all(
   articoli.map(async (a) => ({
     ...a,
     rendered: await render(a),
-  }))
+  })),
 );
 
 const renderedDisposizioni = await Promise.all(
   disposizioni.map(async (d) => ({
     ...d,
     rendered: await render(d),
-  }))
+  })),
 );
 
 // Pre-compute filtered arrays for better performance
-const principiFondamentali = renderedArticoli.filter(a => a.data.sezione === 'principi-fondamentali');
+const principiFondamentali = renderedArticoli.filter(
+  (a) => a.data.sezione === "principi-fondamentali",
+);
 
 const parteIByTitolo = new Map<string, typeof renderedArticoli>();
 for (const titolo of costituzioneStructure.parti[0].titoli) {
   parteIByTitolo.set(
     titolo.numero,
-    renderedArticoli.filter(a => a.data.parte === 'I' && a.data.titolo_sezione === titolo.numero)
+    renderedArticoli.filter(
+      (a) => a.data.parte === "I" && a.data.titolo_sezione === titolo.numero,
+    ),
   );
 }
 
@@ -48,28 +61,34 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
     for (const sezione of titolo.sezioni) {
       parteIIBySezione.set(
         sezione.id,
-        renderedArticoli.filter(a => sezione.articoli.includes(a.data.numero as number))
+        renderedArticoli.filter((a) =>
+          sezione.articoli.includes(a.data.numero as number),
+        ),
       );
     }
   } else {
     parteIIByTitolo.set(
       titolo.numero,
-      renderedArticoli.filter(a => a.data.parte === 'II' && a.data.titolo_sezione === titolo.numero)
+      renderedArticoli.filter(
+        (a) => a.data.parte === "II" && a.data.titolo_sezione === titolo.numero,
+      ),
     );
   }
 }
 ---
 
-<Layout 
-  title="Testo Completo" 
+<Layout
+  title="Testo Completo"
   description="Il testo completo della Costituzione della Repubblica Italiana"
 >
   <main class="py-8">
     <Container>
       <header class="text-center mb-12 pb-8 border-b-2 border-primary">
-        <PageTitle subtitle="Testo completo">Costituzione della Repubblica Italiana</PageTitle>
-        <button 
-          class="no-print inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors" 
+        <PageTitle subtitle="Testo completo"
+          >Costituzione della Repubblica Italiana</PageTitle
+        >
+        <button
+          class="no-print inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors"
           onclick="window.print()"
         >
           <Icon name="print" class="w-4 h-4" />
@@ -78,97 +97,169 @@ for (const titolo of costituzioneStructure.parti[1].titoli) {
       </header>
 
       <!-- Preamble -->
-      <Card class="max-w-3xl mx-auto mb-12 p-8 font-serif text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300">
-        <p class="mb-4"><strong class="text-gray-900 dark:text-gray-100">IL CAPO PROVVISORIO DELLO STATO</strong></p>
+      <Card
+        class="max-w-3xl mx-auto mb-12 p-8 font-serif text-lg leading-relaxed text-center text-gray-700 dark:text-gray-300"
+      >
         <p class="mb-4">
-          Vista la deliberazione dell'Assemblea Costituente, che nella seduta 
-          del 22 dicembre 1947 ha approvato la Costituzione della Repubblica Italiana;
+          <strong class="text-gray-900 dark:text-gray-100"
+            >IL CAPO PROVVISORIO DELLO STATO</strong>
         </p>
-        <p class="mb-4">Vista la XVIII disposizione finale della Costituzione;</p>
-        <p class="mb-4"><strong class="text-gray-900 dark:text-gray-100">PROMULGA</strong></p>
-        <p class="m-0">la Costituzione della Repubblica Italiana nel seguente testo:</p>
+        <p class="mb-4">
+          Vista la deliberazione dell'Assemblea Costituente, che nella seduta
+          del 22 dicembre 1947 ha approvato la Costituzione della Repubblica
+          Italiana;
+        </p>
+        <p class="mb-4">
+          Vista la XVIII disposizione finale della Costituzione;
+        </p>
+        <p class="mb-4">
+          <strong class="text-gray-900 dark:text-gray-100">PROMULGA</strong>
+        </p>
+        <p class="m-0">
+          la Costituzione della Repubblica Italiana nel seguente testo:
+        </p>
       </Card>
 
       <!-- Principi Fondamentali -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <SectionTitle id="principi-fondamentali" centered>Principi Fondamentali</SectionTitle>
-        {principiFondamentali.map(({ data, rendered }) => (
-          <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
-            <rendered.Content />
-          </ArticleItem>
-        ))}
+        <SectionTitle id="principi-fondamentali" centered
+          >Principi Fondamentali</SectionTitle
+        >
+        {
+          principiFondamentali.map(({ data, rendered }) => (
+            <ArticleItem
+              id={`art-${data.numero}`}
+              title={data.titolo}
+              abrogato={data.abrogato}
+            >
+              <rendered.Content />
+            </ArticleItem>
+          ))
+        }
       </section>
 
       <!-- Parte I -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <SectionTitle id="parte-1" centered>Parte I - Diritti e Doveri dei Cittadini</SectionTitle>
-        
-        {costituzioneStructure.parti[0].titoli.map((titolo) => (
-          <div class="mb-10">
-            <SectionTitle level={3} id={`titolo-1-${titolo.numero.toLowerCase()}`} class="text-gray-900 dark:text-gray-100">
-              Titolo {titolo.numero} - {titolo.nome}
-            </SectionTitle>
-            {parteIByTitolo.get(titolo.numero)?.map(({ data, rendered }) => (
-              <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
-                <rendered.Content />
-              </ArticleItem>
-            ))}
-          </div>
-        ))}
+        <SectionTitle id="parte-1" centered
+          >Parte I - Diritti e Doveri dei Cittadini</SectionTitle
+        >
+
+        {
+          costituzioneStructure.parti[0].titoli.map((titolo) => (
+            <div class="mb-10">
+              <SectionTitle
+                level={3}
+                id={`titolo-1-${titolo.numero.toLowerCase()}`}
+                class="text-gray-900 dark:text-gray-100"
+              >
+                Titolo {titolo.numero} - {titolo.nome}
+              </SectionTitle>
+              {parteIByTitolo.get(titolo.numero)?.map(({ data, rendered }) => (
+                <ArticleItem
+                  id={`art-${data.numero}`}
+                  title={data.titolo}
+                  abrogato={data.abrogato}
+                >
+                  <rendered.Content />
+                </ArticleItem>
+              ))}
+            </div>
+          ))
+        }
       </section>
 
       <!-- Parte II -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <SectionTitle id="parte-2" centered>Parte II - Ordinamento della Repubblica</SectionTitle>
-        
-        {costituzioneStructure.parti[1].titoli.map((titolo) => (
-          <div class="mb-10">
-            <SectionTitle level={3} id={`titolo-2-${titolo.numero.toLowerCase()}`} class="text-gray-900 dark:text-gray-100">
-              Titolo {titolo.numero} - {titolo.nome}
-            </SectionTitle>
-            
-            {titolo.sezioni ? (
-              titolo.sezioni.map((sezione) => (
-                <div class="mb-8">
-                  <SectionTitle level={4} border={false}>
-                    Sezione {sezione.id.split('-').pop()?.toUpperCase()} - {sezione.nome}
-                  </SectionTitle>
-                  {parteIIBySezione.get(sezione.id)?.map(({ data, rendered }) => (
-                    <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
-                      <rendered.Content />
-                    </ArticleItem>
-                  ))}
-                </div>
-              ))
-            ) : (
-              parteIIByTitolo.get(titolo.numero)?.map(({ data, rendered }) => (
-                <ArticleItem id={`art-${data.numero}`} title={data.titolo} abrogato={data.abrogato}>
-                  <rendered.Content />
-                </ArticleItem>
-              ))
-            )}
-          </div>
-        ))}
+        <SectionTitle id="parte-2" centered
+          >Parte II - Ordinamento della Repubblica</SectionTitle
+        >
+
+        {
+          costituzioneStructure.parti[1].titoli.map((titolo) => (
+            <div class="mb-10">
+              <SectionTitle
+                level={3}
+                id={`titolo-2-${titolo.numero.toLowerCase()}`}
+                class="text-gray-900 dark:text-gray-100"
+              >
+                Titolo {titolo.numero} - {titolo.nome}
+              </SectionTitle>
+
+              {titolo.sezioni
+                ? titolo.sezioni.map((sezione) => (
+                    <div class="mb-8">
+                      <SectionTitle level={4} border={false}>
+                        Sezione {sezione.id.split("-").pop()?.toUpperCase()} -{" "}
+                        {sezione.nome}
+                      </SectionTitle>
+                      {parteIIBySezione
+                        .get(sezione.id)
+                        ?.map(({ data, rendered }) => (
+                          <ArticleItem
+                            id={`art-${data.numero}`}
+                            title={data.titolo}
+                            abrogato={data.abrogato}
+                          >
+                            <rendered.Content />
+                          </ArticleItem>
+                        ))}
+                    </div>
+                  ))
+                : parteIIByTitolo
+                    .get(titolo.numero)
+                    ?.map(({ data, rendered }) => (
+                      <ArticleItem
+                        id={`art-${data.numero}`}
+                        title={data.titolo}
+                        abrogato={data.abrogato}
+                      >
+                        <rendered.Content />
+                      </ArticleItem>
+                    ))}
+            </div>
+          ))
+        }
       </section>
 
       <!-- Disposizioni Transitorie -->
       <section class="max-w-3xl mx-auto mb-12 print:break-before-page">
-        <SectionTitle id="disposizioni-transitorie" centered>Disposizioni Transitorie e Finali</SectionTitle>
-        {renderedDisposizioni.map(({ data, rendered }) => (
-          <ArticleItem id={`disp-${(data.numero as string).toLowerCase()}`} title={`${data.numero}.`} abrogato={data.abrogato}>
-            <rendered.Content />
-          </ArticleItem>
-        ))}
+        <SectionTitle id="disposizioni-transitorie" centered
+          >Disposizioni Transitorie e Finali</SectionTitle
+        >
+        {
+          renderedDisposizioni.map(({ data, rendered }) => (
+            <ArticleItem
+              id={`disp-${(data.numero as string).toLowerCase()}`}
+              title={`${data.numero}.`}
+              abrogato={data.abrogato}
+            >
+              <rendered.Content />
+            </ArticleItem>
+          ))
+        }
       </section>
 
       <!-- Signatures -->
-      <footer class="max-w-3xl mx-auto mt-12 pt-8 border-t-2 border-primary text-center font-serif text-lg text-gray-700 dark:text-gray-300">
+      <footer
+        class="max-w-3xl mx-auto mt-12 pt-8 border-t-2 border-primary text-center font-serif text-lg text-gray-700 dark:text-gray-300"
+      >
         <p class="mb-4"><em>Data a Roma, addì 27 dicembre 1947.</em></p>
         <p class="mb-4"><em>Enrico De Nicola</em></p>
-        <p class="mt-8 mb-4"><strong class="text-gray-900 dark:text-gray-100">CONTROFIRMANO:</strong></p>
-        <p class="mb-4">Il Presidente dell'Assemblea Costituente<br><em>Umberto Terracini</em></p>
-        <p class="mb-4">Il Presidente del Consiglio dei Ministri<br><em>Alcide De Gasperi</em></p>
-        <p class="mb-4">Visto, il Guardasigilli:<br><em>Giuseppe Grassi</em></p>
+        <p class="mt-8 mb-4">
+          <strong class="text-gray-900 dark:text-gray-100"
+            >CONTROFIRMANO:</strong>
+        </p>
+        <p class="mb-4">
+          Il Presidente dell'Assemblea Costituente<br /><em
+            >Umberto Terracini</em>
+        </p>
+        <p class="mb-4">
+          Il Presidente del Consiglio dei Ministri<br /><em
+            >Alcide De Gasperi</em>
+        </p>
+        <p class="mb-4">
+          Visto, il Guardasigilli:<br /><em>Giuseppe Grassi</em>
+        </p>
       </footer>
     </Container>
   </main>

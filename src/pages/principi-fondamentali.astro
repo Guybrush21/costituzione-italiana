@@ -1,33 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
-import SectionLayout from '../components/SectionLayout.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import { sortArticlesByNumber } from '../data/structure';
+import { getCollection } from "astro:content";
+import SectionLayout from "../components/SectionLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { sortArticlesByNumber } from "../data/structure";
 
-const articoliRaw = await getCollection('articoli', ({ data }) => 
-  data.tipo === 'articolo' && data.sezione === 'principi-fondamentali'
+const articoliRaw = await getCollection(
+  "articoli",
+  ({ data }) =>
+    data.tipo === "articolo" && data.sezione === "principi-fondamentali",
 );
 
 const articoli = sortArticlesByNumber(articoliRaw);
 
 const breadcrumbs = [
-  { label: 'Home', href: '/' },
-  { label: 'Principi Fondamentali' },
+  { label: "Home", href: "/" },
+  { label: "Principi Fondamentali" },
 ];
 ---
 
-<SectionLayout 
+<SectionLayout
   title="Principi Fondamentali"
   description="I dodici articoli che costituiscono i principi fondamentali della Costituzione Italiana definiscono i valori su cui si fonda la Repubblica."
   metaDescription="I principi fondamentali della Costituzione Italiana, articoli 1-12."
   breadcrumbs={breadcrumbs}
 >
-  {articoli.map((articolo) => (
-    <ArticleCard
-      numero={articolo.data.numero}
-      tipo={articolo.data.tipo}
-      descrizione={articolo.data.descrizione}
-      abrogato={articolo.data.abrogato}
-    />
-  ))}
+  {
+    articoli.map((articolo) => (
+      <ArticleCard
+        numero={articolo.data.numero}
+        tipo={articolo.data.tipo}
+        descrizione={articolo.data.descrizione}
+        abrogato={articolo.data.abrogato}
+      />
+    ))
+  }
 </SectionLayout>

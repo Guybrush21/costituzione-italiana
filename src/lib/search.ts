@@ -3,11 +3,11 @@
  */
 
 // Re-export getArticlePath for backward compatibility
-export { getArticlePath as getSearchItemUrl } from '../data/structure';
+export { getArticlePath as getSearchItemUrl } from "../data/structure";
 
 export interface SearchItem {
   numero: number | string;
-  tipo: 'articolo' | 'disposizione';
+  tipo: "articolo" | "disposizione";
   titolo: string;
   descrizione: string;
   contenuto: string;

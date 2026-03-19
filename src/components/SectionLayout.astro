@@ -1,12 +1,12 @@
 ---
 /**
  * SectionLayout Component
- * 
+ *
  * Shared layout for section pages (Principi Fondamentali, Parti, Disposizioni).
  * Provides consistent header, breadcrumbs, and grid layout.
  */
-import Layout from './Layout.astro';
-import { Container, Breadcrumbs, PageTitle, Text } from './ui';
+import Layout from "./Layout.astro";
+import { Container, Breadcrumbs, PageTitle, Text } from "./ui";
 
 interface BreadcrumbItem {
   label: string;
@@ -23,10 +23,7 @@ interface Props {
 const { title, description, metaDescription, breadcrumbs } = Astro.props;
 ---
 
-<Layout 
-  title={title} 
-  description={metaDescription}
->
+<Layout title={title} description={metaDescription}>
   <main class="py-8">
     <Container>
       <header class="max-w-3xl mx-auto mb-10 text-center">

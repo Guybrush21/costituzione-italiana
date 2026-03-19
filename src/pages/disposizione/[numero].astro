@@ -1,11 +1,14 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from '../../components/Layout.astro';
-import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection, render } from "astro:content";
+import Layout from "../../components/Layout.astro";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
 
 export async function getStaticPaths() {
-  const disposizioni = await getCollection('articoli', ({ data }) => data.tipo === 'disposizione');
-  
+  const disposizioni = await getCollection(
+    "articoli",
+    ({ data }) => data.tipo === "disposizione",
+  );
+
   return disposizioni.map((disposizione) => ({
     params: { numero: String(disposizione.data.numero).toLowerCase() },
     props: { disposizione },
@@ -18,10 +21,7 @@ const { Content } = await render(disposizione);
 const { numero, titolo, abrogato, descrizione } = disposizione.data;
 ---
 
-<Layout 
-  title={titolo} 
-  description={descrizione}
->
+<Layout title={titolo} description={descrizione}>
   <ArticleLayout
     numero={numero}
     tipo="disposizione"

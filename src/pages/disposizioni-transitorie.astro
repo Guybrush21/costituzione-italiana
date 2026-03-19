@@ -1,33 +1,36 @@
 ---
-import { getCollection } from 'astro:content';
-import SectionLayout from '../components/SectionLayout.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import { sortArticlesByNumber } from '../data/structure';
+import { getCollection } from "astro:content";
+import SectionLayout from "../components/SectionLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { sortArticlesByNumber } from "../data/structure";
 
-const disposizioniRaw = await getCollection('articoli', ({ data }) => 
-  data.tipo === 'disposizione'
+const disposizioniRaw = await getCollection(
+  "articoli",
+  ({ data }) => data.tipo === "disposizione",
 );
 
 const disposizioni = sortArticlesByNumber(disposizioniRaw);
 
 const breadcrumbs = [
-  { label: 'Home', href: '/' },
-  { label: 'Disposizioni Transitorie e Finali' },
+  { label: "Home", href: "/" },
+  { label: "Disposizioni Transitorie e Finali" },
 ];
 ---
 
-<SectionLayout 
+<SectionLayout
   title="Disposizioni Transitorie e Finali"
   description="Le diciotto disposizioni transitorie e finali che accompagnano la Costituzione Italiana, regolando il passaggio dal vecchio al nuovo ordinamento."
   metaDescription="Le disposizioni transitorie e finali della Costituzione Italiana."
   breadcrumbs={breadcrumbs}
 >
-  {disposizioni.map((disp) => (
-    <ArticleCard
-      numero={disp.data.numero}
-      tipo={disp.data.tipo}
-      descrizione={disp.data.descrizione}
-      abrogato={disp.data.abrogato}
-    />
-  ))}
+  {
+    disposizioni.map((disp) => (
+      <ArticleCard
+        numero={disp.data.numero}
+        tipo={disp.data.tipo}
+        descrizione={disp.data.descrizione}
+        abrogato={disp.data.abrogato}
+      />
+    ))
+  }
 </SectionLayout>

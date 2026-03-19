@@ -1,9 +1,9 @@
 ---
 /**
  * Breadcrumbs Component
- * 
+ *
  * Navigation breadcrumbs with consistent styling.
- * 
+ *
  * @example
  * <Breadcrumbs items={[
  *   { label: 'Home', href: '/' },
@@ -26,36 +26,37 @@ interface Props {
   ariaLabel?: string;
 }
 
-const { items, centered = false, ariaLabel = 'Percorso' } = Astro.props;
+const { items, centered = false, ariaLabel = "Percorso" } = Astro.props;
 ---
 
-<nav 
+<nav
   class:list={[
-    'flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400',
-    { 'justify-center': centered }
+    "flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400",
+    { "justify-center": centered },
   ]}
   aria-label={ariaLabel}
 >
-  {items.map((crumb, index) => (
-    <>
-      {index > 0 && (
-        <span class="text-gray-300 dark:text-gray-600" aria-hidden="true">/</span>
-      )}
-      {crumb.href ? (
-        <a 
-          href={crumb.href} 
-          class="text-gray-600 dark:text-gray-300 hover:text-primary no-underline"
-        >
-          {crumb.label}
-        </a>
-      ) : (
-        <span 
-          class="text-gray-900 dark:text-gray-100"
-          aria-current="page"
-        >
-          {crumb.label}
-        </span>
-      )}
-    </>
-  ))}
+  {
+    items.map((crumb, index) => (
+      <>
+        {index > 0 && (
+          <span class="text-gray-300 dark:text-gray-600" aria-hidden="true">
+            /
+          </span>
+        )}
+        {crumb.href ? (
+          <a
+            href={crumb.href}
+            class="text-gray-600 dark:text-gray-300 hover:text-primary no-underline"
+          >
+            {crumb.label}
+          </a>
+        ) : (
+          <span class="text-gray-900 dark:text-gray-100" aria-current="page">
+            {crumb.label}
+          </span>
+        )}
+      </>
+    ))
+  }
 </nav>

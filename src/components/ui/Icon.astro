@@ -1,25 +1,25 @@
 ---
 /**
  * Icon Component
- * 
+ *
  * Reusable SVG icon component with consistent sizing and styling.
  * All icons use currentColor for easy theming.
- * 
+ *
  * @example
  * <Icon name="search" />
  * <Icon name="menu" size={24} />
  * <Icon name="sun" class="text-yellow-500" />
  */
 
-type IconName = 
-  | 'logo'
-  | 'search'
-  | 'sun'
-  | 'moon'
-  | 'menu'
-  | 'close'
-  | 'document'
-  | 'print';
+type IconName =
+  | "logo"
+  | "search"
+  | "sun"
+  | "moon"
+  | "menu"
+  | "close"
+  | "document"
+  | "print";
 
 interface Props {
   /** Icon name */
@@ -82,14 +82,14 @@ const iconContent = icons[name];
 const ariaHidden = !label;
 ---
 
-<svg 
-  width={size} 
-  height={size} 
-  viewBox="0 0 24 24" 
-  fill="none" 
-  stroke="currentColor" 
-  stroke-width="2" 
-  stroke-linecap="round" 
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
   stroke-linejoin="round"
   class={className}
   aria-hidden={ariaHidden}

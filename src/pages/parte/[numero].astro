@@ -1,13 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
-import SectionLayout from '../../components/SectionLayout.astro';
-import ArticleCard from '../../components/ArticleCard.astro';
-import { costituzioneStructure, sortArticlesByNumber } from '../../data/structure';
+import { getCollection } from "astro:content";
+import SectionLayout from "../../components/SectionLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import {
+  costituzioneStructure,
+  sortArticlesByNumber,
+} from "../../data/structure";
 
 export function getStaticPaths() {
   return [
-    { params: { numero: '1' }, props: { parteIndex: 0 } },
-    { params: { numero: '2' }, props: { parteIndex: 1 } },
+    { params: { numero: "1" }, props: { parteIndex: 0 } },
+    { params: { numero: "2" }, props: { parteIndex: 1 } },
   ];
 }
 
@@ -18,8 +21,9 @@ interface Props {
 const { parteIndex } = Astro.props;
 const parte = costituzioneStructure.parti[parteIndex];
 
-const articoliRaw = await getCollection('articoli', ({ data }) => 
-  data.tipo === 'articolo' && data.parte === parte.numero
+const articoliRaw = await getCollection(
+  "articoli",
+  ({ data }) => data.tipo === "articolo" && data.parte === parte.numero,
 );
 
 const articoli = sortArticlesByNumber(articoliRaw);
@@ -29,23 +33,25 @@ const lastTitolo = parte.titoli[parte.titoli.length - 1];
 const lastArticle = lastTitolo.articoli[lastTitolo.articoli.length - 1];
 
 const breadcrumbs = [
-  { label: 'Home', href: '/' },
+  { label: "Home", href: "/" },
   { label: `Parte ${parte.numero}` },
 ];
 ---
 
-<SectionLayout 
+<SectionLayout
   title={`Parte ${parte.numero} - ${parte.nome}`}
   description={`Articoli ${firstArticle} - ${lastArticle}`}
   metaDescription={`${parte.nome} - Costituzione della Repubblica Italiana`}
   breadcrumbs={breadcrumbs}
 >
-  {articoli.map((articolo) => (
-    <ArticleCard
-      numero={articolo.data.numero}
-      tipo={articolo.data.tipo}
-      descrizione={articolo.data.descrizione}
-      abrogato={articolo.data.abrogato}
-    />
-  ))}
+  {
+    articoli.map((articolo) => (
+      <ArticleCard
+        numero={articolo.data.numero}
+        tipo={articolo.data.tipo}
+        descrizione={articolo.data.descrizione}
+        abrogato={articolo.data.abrogato}
+      />
+    ))
+  }
 </SectionLayout>
