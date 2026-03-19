@@ -68,14 +68,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
           <Text muted noMargin class="mb-4">Articoli 13 - 54</Text>
           <div class="grid gap-4">
             {parti[0].titoli.map((titolo) => (
-              <Card variant="inner">
-                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                  Titolo {titolo.numero} - {titolo.nome}
-                </h3>
-                <Text muted noMargin>
-                  Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                </Text>
-              </Card>
+              <a href={`/articolo/${titolo.articoli[0]}`} class="block no-underline">
+                <Card variant="inner" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                    Titolo {titolo.numero} - {titolo.nome}
+                  </h3>
+                  <Text muted noMargin>
+                    Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
+                  </Text>
+                </Card>
+              </a>
             ))}
           </div>
         </Card>
@@ -90,14 +92,16 @@ const { principiFondamentali, parti, disposizioniTransitorie } = costituzioneStr
           <Text muted noMargin class="mb-4">Articoli 55 - 139</Text>
           <div class="grid gap-4">
             {parti[1].titoli.map((titolo) => (
-              <Card variant="inner">
-                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                  Titolo {titolo.numero} - {titolo.nome}
-                </h3>
-                <Text muted noMargin>
-                  Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
-                </Text>
-              </Card>
+              <a href={`/articolo/${titolo.articoli[0]}`} class="block no-underline">
+                <Card variant="inner" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                    Titolo {titolo.numero} - {titolo.nome}
+                  </h3>
+                  <Text muted noMargin>
+                    Art. {titolo.articoli[0]} - {titolo.articoli[titolo.articoli.length - 1]}
+                  </Text>
+                </Card>
+              </a>
             ))}
           </div>
         </Card>
